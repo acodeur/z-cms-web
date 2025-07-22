@@ -6,12 +6,12 @@
 
       <!-- tabs切换 -->
       <div class="tab-control">
-        <el-tabs v-model="activeName" stretch class="tabs" @tab-click="handleTabClick">
+        <el-tabs type="border-card" v-model="activeName" stretch class="tabs" @tab-click="handleTabClick">
           <el-tab-pane label="账户登录" name="account">
             <template #label>
               <div class="label">
                 <el-icon><User /></el-icon>
-                账户登录
+                帐号登录
               </div>
             </template>
             <AccountPanel />
@@ -30,7 +30,7 @@
 
       <!-- 底部区域 -->
       <div class="controls">
-        <el-checkbox v-model="rememberMe" size="small">
+        <el-checkbox v-model="rememberMe">
           <span>记住密码</span>
         </el-checkbox>
         <el-link

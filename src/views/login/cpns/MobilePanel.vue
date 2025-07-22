@@ -1,6 +1,6 @@
 <template>
   <div class="mobile-panel">
-    <el-form :model="mobileForm" ref="mobileFormRef" label-width="auto" label-position="right">
+    <el-form :model="mobileForm" ref="mobileFormRef" label-width="auto" label-position="right" >
       <el-form-item label="手机号码" prop="phone">
         <el-input v-model="mobileForm.phone" />
       </el-form-item>
@@ -24,7 +24,6 @@ const mobileForm = reactive({
 <style lang="less" scoped>
 .mobile-panel {
   padding: 20px 20px 2px;
-  background-color: #f0f0f0;
   border-radius: 8px;
 }
 </style>
