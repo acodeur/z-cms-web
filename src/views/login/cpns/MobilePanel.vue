@@ -1,6 +1,13 @@
 <template>
   <div class="mobile-panel">
-    <el-form :model="mobileForm" ref="mobileFormRef" label-width="auto" label-position="right" >
+    <el-form
+      :model="mobileForm"
+      ref="mobileFormRef"
+      label-width="auto"
+      label-position="right"
+      :rules="rules"
+      status-icon
+    >
       <el-form-item label="手机号码" prop="phone">
         <el-input v-model="mobileForm.phone" />
       </el-form-item>
@@ -19,6 +26,24 @@ const mobileForm = reactive({
   phone: '',
   code: '',
 })
+
+const rules = reactive({
+  phone: [
+    { required: true, message: '请输入手机号码', trigger: 'blur' },
+    {
+      pattern: /^1[3-9]\d{9}$/,
+      message: '请输入有效的手机号码',
+      trigger: 'change',
+    },
+  ],
+  code: [
+    { required: true, message: '请输入验证码', trigger: 'blur' },
+    { pattern: /^[0-9]{6}$/, message: '验证码为6位数字', trigger: 'blur' },
+  ],
+})
+
+
+
 </script>
 
 <style lang="less" scoped>

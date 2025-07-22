@@ -6,6 +6,7 @@
       label-width="auto"
       label-position="right"
       :rules="rules"
+      status-icon
     >
       <el-form-item label="用户名" prop="username">
         <el-input v-model="accountForm.username" />
