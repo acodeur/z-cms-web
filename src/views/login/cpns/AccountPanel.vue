@@ -1,4 +1,4 @@
-<template>
+ <template>
   <div class="account-panel">
     <el-form
       :model="accountForm"

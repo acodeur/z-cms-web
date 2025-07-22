@@ -56,7 +56,7 @@ import { User, Cellphone } from '@element-plus/icons-vue'
 import type { TabsPaneContext } from 'element-plus'
 import AccountPanel from './cpns/AccountPanel.vue'
 import MobilePanel from './cpns/MobilePanel.vue'
-import '/node_modules/element-plus/theme-chalk/index.css'
+// import 'element-plus/theme-chalk/index.css'
 
 const router = useRouter()
 const rememberMe = ref(false)
