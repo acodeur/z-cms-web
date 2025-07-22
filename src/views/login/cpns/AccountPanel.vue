@@ -1,6 +1,12 @@
 <template>
   <div class="account-panel">
-    <el-form :model="accountForm" ref="accountFormRef" label-width="auto" label-position="right" :rules="rules">
+    <el-form
+      :model="accountForm"
+      ref="accountFormRef"
+      label-width="auto"
+      label-position="right"
+      :rules="rules"
+    >
       <el-form-item label="用户名" prop="username">
         <el-input v-model="accountForm.username" />
       </el-form-item>
@@ -12,7 +18,7 @@
 </template>
 
 <script setup lang="ts">
-import type { FormRules} from 'element-plus';
+import type { FormRules } from 'element-plus'
 import { reactive } from 'vue'
 const accountForm = reactive({
   username: '',
@@ -20,18 +26,22 @@ const accountForm = reactive({
 })
 
 interface RuleForm {
-  username: string;
-  password: string;
+  username: string
+  password: string
 }
 const rules = reactive<FormRules<RuleForm>>({
   username: [
     { required: true, message: '请输入用户名', trigger: 'blur' },
-    { min: 3, max: 20, message: '长度在 3 到 20 个字符之间', trigger: 'blur' }
+    {
+      pattern: /^[a-zA-Z0-9_\-]{3,10}$/,
+      message: '仅数字、字母、-、_，长度3-10位',
+      trigger: 'change',
+    },
   ],
   password: [
     { required: true, message: '请输入密码', trigger: 'blur' },
-    { min: 6, max: 20, message: '长度在 6 到 20 个字符之间', trigger: 'blur' }
-  ]
+    { min: 6, max: 20, message: '长度6-20位', trigger: 'blur' },
+  ],
 })
 </script>
 

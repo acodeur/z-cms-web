@@ -87,6 +87,7 @@ const handleLoginBtnClick = () => {
   align-items: center;
   width: 100%;
   height: 100%;
+  background-image: url('@/assets/img/login-bg.svg');
 
   .login-container {
     display: flex;
@@ -102,15 +103,6 @@ const handleLoginBtnClick = () => {
 
     .tab-control {
       width: 100%;
-      // .tabs {
-      //   // display: flex;
-      //   // justify-content: space-around;
-      //   // // align-items: center;
-      //   // width: 100%;
-      //   // .el-tabs__content {
-      //   //   width: 100%;
-      //   // }
-      // }
     }
 
     .controls {
