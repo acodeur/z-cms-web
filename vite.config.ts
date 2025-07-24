@@ -10,6 +10,9 @@ import { createStyleImportPlugin, ElementPlusResolve } from 'vite-plugin-style-i
 
 // https://vite.dev/config/
 export default defineConfig({
+  build: {
+    sourcemap: true,
+  },
   plugins: [
     vue(),
     vueDevTools(),

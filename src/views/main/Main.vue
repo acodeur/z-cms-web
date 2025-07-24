@@ -1,6 +1,6 @@
 <template>
-  <div class="wrapper">
-    <h2>wrapper {{ counterStore.count }} - {{ counterStore.doubleCount }}</h2>
+  <div class="main">
+    <h2>main {{ counterStore.count }} - {{ counterStore.doubleCount }}</h2>
   </div>
 </template>
 
@@ -11,7 +11,7 @@ const counterStore = useCounterStore()
 </script>
 
 <style lang="less" scoped>
-.wrapper {
+.main {
   padding: 20px;
   background-color: #f0f0f0;
   border-radius: 8px;

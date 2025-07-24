@@ -1,4 +1,4 @@
- <template>
+<template>
   <div class="account-panel">
     <el-form
       :model="accountForm"
@@ -19,13 +19,34 @@
 </template>
 
 <script setup lang="ts">
-import type { FormRules } from 'element-plus'
-import { reactive } from 'vue'
-const accountForm = reactive({
+import type { ElForm, FormRules } from 'element-plus'
+import { reactive, ref } from 'vue'
+import type { IAccount } from '@/types'
+import useLoginStore from '@/stores/login/login'
+import router from '@/router'
+const accountForm = reactive<IAccount>({
   username: '',
   password: '',
 })
+const loginStore = useLoginStore()
+const accountFormRef = ref<InstanceType<typeof ElForm>>()
+const login = () => {
+  accountFormRef.value?.validate((valid) => {
+    if (!valid) {
+      ElMessage.error('请填写正确的用户名和密码')
+    } else {
+      // Handle login logic here
+      const username = accountForm.username
+      const password = accountForm.password
+      loginStore.accountLogin({
+        username,
+        password,
+      })
+    }
+  })
+}
 
+// Define validation rules
 interface RuleForm {
   username: string
   password: string
@@ -43,6 +64,11 @@ const rules = reactive<FormRules<RuleForm>>({
     { required: true, message: '请输入密码', trigger: 'blur' },
     { min: 6, max: 20, message: '长度6-20位', trigger: 'blur' },
   ],
+})
+
+// Expose the form reference for external access
+defineExpose({
+  login,
 })
 </script>
 
