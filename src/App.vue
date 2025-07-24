@@ -1,12 +1,11 @@
 <template>
   <div class="app">
-    <Login />
+    <router-view />
     <!-- <El /> -->
   </div>
 </template>
 
 <script setup lang="ts">
-import Login from '@/views/login/Login.vue'
 import El from './views/El.vue'
 </script>
 

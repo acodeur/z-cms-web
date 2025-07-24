@@ -14,6 +14,9 @@ class Cache {
     if (value) {
       this.storage.setItem(key, JSON.stringify(value))
     }
+    if (typeof value === 'boolean') {
+      this.storage.setItem(key, value.toString())
+    }
   }
 
   getCache(key: string) {

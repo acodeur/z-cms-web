@@ -11,7 +11,7 @@ export function accountLoginApi(account: IAccount): Promise<any> {
       } else {
         reject({ success: false, message: '用户名或密码错误' })
       }
-    }, 2000)
+    }, 1000)
   })
 }
 

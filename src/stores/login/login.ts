@@ -3,6 +3,7 @@ import { accountLoginApi } from '@/service/login/login'
 import type { IAccount } from '@/types'
 import { defineStore } from 'pinia'
 import { ZZ_TOKEN } from '@/global/constants'
+import { localCache } from '@/utils/cache'
 
 interface IUserInfo {
   id: string
@@ -32,7 +33,7 @@ const useLoginStore = defineStore('login', {
 
     setToken(token: string) {
       this.token = token
-      localStorage.setItem(ZZ_TOKEN, token) // 模拟存储token
+      localCache.setCache(ZZ_TOKEN, token) // 模拟存储token
     },
     setUserInfo(userInfo: IUserInfo) {
       this.userInfo = userInfo

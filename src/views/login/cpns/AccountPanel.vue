@@ -23,25 +23,39 @@ import type { ElForm, FormRules } from 'element-plus'
 import { reactive, ref } from 'vue'
 import type { IAccount } from '@/types'
 import useLoginStore from '@/stores/login/login'
-import router from '@/router'
+import { localCache } from '@/utils/cache'
+
+const REMEMBER_USER_KEY = 'rememberUser'
+
+const rememberUser = localCache.getCache(REMEMBER_USER_KEY)
 const accountForm = reactive<IAccount>({
-  username: '',
-  password: '',
+  username: rememberUser?.username || '',
+  password: rememberUser?.password || '',
 })
 const loginStore = useLoginStore()
 const accountFormRef = ref<InstanceType<typeof ElForm>>()
-const login = () => {
+const login = (rememberMe: boolean) => {
   accountFormRef.value?.validate((valid) => {
     if (!valid) {
       ElMessage.error('请填写正确的用户名和密码')
     } else {
       // Handle login logic here
-      const username = accountForm.username
-      const password = accountForm.password
-      loginStore.accountLogin({
-        username,
-        password,
-      })
+      const account = {
+        username: accountForm.username,
+        password: accountForm.password,
+      }
+      loginStore
+        .accountLogin(account)
+        .then(() => {
+          if (rememberMe) {
+            localCache.setCache(REMEMBER_USER_KEY, account)
+          } else {
+            localCache.removeCache(REMEMBER_USER_KEY)
+          }
+        })
+        .catch((error) => {
+          ElMessage.error(error.message || '登录失败，请重试')
+        })
     }
   })
 }

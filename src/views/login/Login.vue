@@ -55,19 +55,19 @@ import { User, Cellphone } from '@element-plus/icons-vue'
 import type { TabsPaneContext } from 'element-plus'
 import AccountPanel from './cpns/AccountPanel.vue'
 import MobilePanel from './cpns/MobilePanel.vue'
-import router from '@/router'
+import { localCache } from '@/utils/cache'
 
-const rememberMe = ref(false)
+const REMEMBER_ME_KEY = 'rememberMe'
+
+const rememberMe = ref(localCache.getCache(REMEMBER_ME_KEY) || false)
 const activeName = ref('account')
 
 const accountPanelRef = ref<InstanceType<typeof AccountPanel>>()
 const handleLoginBtnClick = () => {
-  router.push('/main')
   if (activeName.value === 'account') {
     // 处理账户登录逻辑
-    console.log('账户登录')
-    router.push('/main')
-    // accountPanelRef.value?.login()
+    accountPanelRef.value?.login(rememberMe.value)
+    localCache.setCache('rememberMe', rememberMe.value)
   } else if (activeName.value === 'mobile') {
     // 处理手机登录逻辑
     console.log('手机登录')
