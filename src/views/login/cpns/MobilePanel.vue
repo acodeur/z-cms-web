@@ -12,7 +12,8 @@
         <el-input v-model="mobileForm.phone" />
       </el-form-item>
       <el-form-item label="验证码" prop="code">
-        <el-input v-model="mobileForm.code" />
+        <el-input v-model="mobileForm.code" class="code-input" />
+        <el-button type="primary" class="code-btn" @click="getSmsCode">获取验证码</el-button>
       </el-form-item>
     </el-form>
     <!-- 其他手机登录相关内容 -->
@@ -42,13 +43,24 @@ const rules = reactive({
   ],
 })
 
-
-
+const getSmsCode = () => {
+  console.log('获取验证码')
+}
 </script>
 
 <style lang="less" scoped>
 .mobile-panel {
   padding: 20px 20px 2px;
   border-radius: 8px;
+
+  .code-input {
+    width: 55%;
+  }
+
+  .code-btn {
+    width: 42%;
+    font-size: 12px;
+    margin-left: 5px;
+  }
 }
 </style>

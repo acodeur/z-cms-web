@@ -35,7 +35,7 @@
       </div>
 
       <!-- 底部区域 -->
-      <div class="controls">
+      <div class="controls" v-if="activeName === 'account'">
         <el-checkbox v-model="rememberMe">
           <span>记住密码</span>
         </el-checkbox>
