@@ -42,7 +42,7 @@ class ZRequest {
 
     // 针对特定的ZRequest实例添加拦截器
     this.instance.interceptors.request.use(
-      config.interceptors?.requestSuccessFn,
+      config.interceptors?.requestSuccessFn as any,
       config.interceptors?.requestFailureFn,
     )
     this.instance.interceptors.response.use(
