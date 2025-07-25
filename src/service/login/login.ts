@@ -1,17 +1,22 @@
-import type { IAccount } from '@/types'
+import type { IServiceAccount } from '..'
 import zRequest from '..'
 
-export function accountLoginApi(account: IAccount): Promise<any> {
-  return new Promise((resolve, reject) => {
-    // 模拟登录请求
-    const { username, password } = account
-    setTimeout(() => {
-      if (username === 'admin' && password === '123456') {
-        resolve({ success: true, message: '登录成功',token: 'qwertyuiop' })
-      } else {
-        reject({ success: false, message: '用户名或密码错误' })
-      }
-    }, 1000)
+export function accountLoginApi(account: IServiceAccount): Promise<any> {
+  return zRequest.post({
+    url: '/login',
+    data: account,
+  })
+}
+
+export function getUserInfoApi(userId: string): Promise<any> {
+  return zRequest.get({
+    url: `/users/${userId}`,
+  })
+}
+
+export function getUserMenusApi(roleId: string): Promise<any> {
+  return zRequest.get({
+    url: `/role/${roleId}/menu`,
   })
 }
 
@@ -25,14 +30,5 @@ export function mobileLoginApi(mobile: string, code: string): Promise<any> {
         reject({ success: false, message: '手机号或验证码错误' })
       }
     }, 1000)
-  })
-}
-
-export function getUserInfoApi(token: string): Promise<any> {
-  return zRequest.get({
-    url: '/user/info',
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
   })
 }

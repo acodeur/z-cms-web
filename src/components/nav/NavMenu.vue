@@ -6,7 +6,7 @@
     </div>
     <div class="menu-container">
       <el-menu
-        default-active="1-1"
+        default-active=""
         text-color="#b7bdc3"
         active-text-color="#fff"
         background-color="#001529"
@@ -14,32 +14,19 @@
         @open="handleOpen"
         @close="handleClose"
       >
-        <el-sub-menu index="1">
-          <template #title>
-            <el-icon><monitor /></el-icon>
-            <span>系统总览</span>
-          </template>
-          <el-menu-item index="1-1">核心技术</el-menu-item>
-          <el-menu-item index="1-2">商品统计</el-menu-item>
-        </el-sub-menu>
-        <el-sub-menu index="2">
-          <template #title>
-            <el-icon><setting /></el-icon>
-            <span>系统管理</span>
-          </template>
-          <el-menu-item index="2-1">用户管理</el-menu-item>
-          <el-menu-item index="2-2">部门管理</el-menu-item>
-          <el-menu-item index="2-3">菜单管理</el-menu-item>
-          <el-menu-item index="2-4">角色管理</el-menu-item>
-        </el-sub-menu>
-        <el-sub-menu index="3">
-          <template #title>
-            <el-icon><goods /></el-icon>
-            <span>商品中心</span>
-          </template>
-          <el-menu-item index="3-1">商品类别</el-menu-item>
-          <el-menu-item index="3-2">商品信息</el-menu-item>
-        </el-sub-menu>
+        <template v-for="item in userMenus" :key="item.id">
+          <el-sub-menu :index="item.id + ''">
+            <template #title>
+              <el-icon>
+                <component :is="item.icon.replace('el-icon-', '')" />
+              </el-icon>
+              <span>{{ item.name }}</span>
+            </template>
+            <template v-for="subItem in item.children" :key="subItem.id">
+              <el-menu-item :index="subItem.id + ''">{{ subItem.name }}</el-menu-item>
+            </template>
+          </el-sub-menu>
+        </template>
       </el-menu>
     </div>
   </div>
@@ -47,10 +34,10 @@
 
 <script setup lang="ts">
 import { ref } from 'vue'
-import { Goods, Monitor, Setting } from '@element-plus/icons-vue'
-import useMainStore from '@/stores/main/main'
+import useLoginStore from '@/stores/login/login'
+import { storeToRefs } from 'pinia'
 
-const mainStore = useMainStore()
+const { userMenus } = storeToRefs(useLoginStore())
 
 const isCollapse = ref(true)
 const handleOpen = (key: string, keyPath: string[]) => {

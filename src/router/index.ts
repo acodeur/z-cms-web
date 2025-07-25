@@ -1,4 +1,4 @@
-import { ZZ_TOKEN } from '@/global/constants'
+import { ZZ_TOKEN } from '@/global'
 import { localCache } from '@/utils/cache'
 import { createRouter, createWebHashHistory } from 'vue-router'
 
@@ -23,7 +23,7 @@ const router = createRouter({
       path: '/:pathMatch(.*)*',
       name: 'NotFound',
       component: () => import('@/views/not-found/NotFound.vue'),
-    }
+    },
   ],
 })
 
