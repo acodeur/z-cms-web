@@ -1,8 +1,8 @@
 import { defineStore } from 'pinia'
 
-const useMainStore = defineStore('main', {
+const useHomeStore = defineStore('home', {
   state: () => ({}),
   actions: {},
 })
 
-export default useMainStore
+export default useHomeStore

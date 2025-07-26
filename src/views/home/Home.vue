@@ -1,11 +1,13 @@
 <template>
-  <div class="main">
-    <el-container class="main-container">
+  <div class="home">
+    <el-container class="home-container">
       <el-aside width="200px">
         <nav-menu></nav-menu>
       </el-aside>
       <el-container>
-        <el-header height="50px">Header</el-header>
+        <el-header height="50px">
+          <nav-header></nav-header>
+        </el-header>
         <el-main>Main</el-main>
         <el-footer height="50px"> Copyright © 2025 Zzone </el-footer>
       </el-container>
@@ -18,22 +20,14 @@ import { ZZ_TOKEN } from '@/global'
 import router from '@/router'
 import useCounterStore from '@/stores/counter'
 import { localCache } from '@/utils/cache'
-import { NavMenu } from '@/components/nav'
-
-// const counterStore = useCounterStore()
-
-// const logout = () => {
-//   localCache.removeCache(ZZ_TOKEN)
-//   // Redirect to login page
-//   router.push({ name: 'Login' })
-// }
+import { NavMenu, NavHeader, NavFooter } from '@/components/nav'
 </script>
 
 <style lang="less" scoped>
-.main {
+.home {
   height: 100%;
 
-  .main-container {
+  .home-container {
     height: 100%;
 
     .el-aside {
