@@ -6,9 +6,11 @@
       </el-aside>
       <el-container>
         <el-header height="50px">
-          <nav-header @handle-collapse="handleCollapse" ></nav-header>
+          <nav-header @handle-collapse="handleCollapse"></nav-header>
         </el-header>
-        <el-main>Main</el-main>
+        <el-main>
+          <router-view></router-view>
+        </el-main>
         <el-footer height="50px"> Copyright © 2025 Zzone </el-footer>
       </el-container>
     </el-container>

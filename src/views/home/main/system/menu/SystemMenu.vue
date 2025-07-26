@@ -1,6 +1,6 @@
 <template>
-  <div class="system">
-    <h2>system</h2>
+  <div class="system-menu">
+    <h2>system-menu</h2>
   </div>
 </template>
 
@@ -9,7 +9,7 @@
 </script>
 
 <style lang="less" scoped>
-.system {
+.system-menu {
   padding: 20px;
   background-color: #f0f0f0;
   border-radius: 8px;

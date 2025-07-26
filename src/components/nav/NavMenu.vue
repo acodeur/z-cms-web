@@ -25,7 +25,9 @@
               <span>{{ item.name }}</span>
             </template>
             <template v-for="subItem in item.children" :key="subItem.id">
-              <el-menu-item :index="subItem.id + ''">{{ subItem.name }}</el-menu-item>
+              <el-menu-item :index="subItem.id + ''" @click="handleMenuItemClick(subItem)">{{
+                subItem.name
+              }}</el-menu-item>
             </template>
           </el-sub-menu>
         </template>
@@ -38,6 +40,8 @@
 import { ref } from 'vue'
 import useLoginStore from '@/stores/login/login'
 import { storeToRefs } from 'pinia'
+import { useRouter } from 'vue-router'
+import assistant from '@/utils/assistant'
 
 const props = defineProps({
   collapse: {
@@ -47,12 +51,28 @@ const props = defineProps({
 })
 
 const { userMenus } = storeToRefs(useLoginStore())
+const router = useRouter()
+for (const menu of userMenus.value) {
+  for (const subMenu of menu.children) {
+    const componentName = assistant.getComponentNameFromUrlPath(subMenu.url)
+    const componentPath = '../../views/home' + `${subMenu.url}/${componentName}.vue`
+    router.addRoute('Home', {
+      path: subMenu.url,
+      name: subMenu.name,
+      component: () => import(`${componentPath}`),
+    })
+  }
+}
 
 const handleOpen = (key: string, keyPath: string[]) => {
   console.log(key, keyPath)
 }
 const handleClose = (key: string, keyPath: string[]) => {
   console.log(key, keyPath)
+}
+
+const handleMenuItemClick = (item: any) => {
+  router.push(item.url)
 }
 </script>
 
@@ -110,13 +130,15 @@ const handleClose = (key: string, keyPath: string[]) => {
   }
 }
 
-.fade-enter-active, .fade-leave-active {
-  transition: opacity .5s;
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.5s;
 }
-.fade-enter, .fade-leave-to {
+.fade-enter,
+.fade-leave-to {
   opacity: 0;
 }
 .fade-element {
-  transition: opacity .5s;
+  transition: opacity 0.5s;
 }
 </style>
