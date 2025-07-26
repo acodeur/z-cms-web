@@ -28,15 +28,26 @@
         ></span>
       </div>
       <div class="avatar">
-        <el-avatar
-          src="https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png"
-        ></el-avatar>
+        <el-dropdown>
+          <el-avatar
+            src="https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png"
+          ></el-avatar>
+          <template #dropdown>
+            <el-dropdown-menu>
+              <el-dropdown-item @click="userCenter">个人中心</el-dropdown-item>
+              <el-dropdown-item @click="logout">退出登录</el-dropdown-item>
+            </el-dropdown-menu>
+          </template>
+        </el-dropdown>
       </div>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
+import router from '@/router'
+import assistant from '@/utils/assistant'
+import { localCache } from '@/utils/cache'
 import { ref } from 'vue'
 
 const emit = defineEmits(['handleCollapse'])
@@ -45,6 +56,15 @@ const isCollapse = ref(false)
 function handleMenuIconClick() {
   isCollapse.value = !isCollapse.value
   emit('handleCollapse', isCollapse.value)
+}
+
+const userCenter = () => {
+  console.log('个人中心')
+}
+
+const logout = () => {
+  assistant.removeAllCache()
+  router.push('/login')
 }
 </script>
 
@@ -83,6 +103,7 @@ function handleMenuIconClick() {
       .el-icon {
         margin-right: 15px;
         font-size: 18px;
+        cursor: pointer;
       }
       .is-dot {
         position: absolute;
@@ -95,8 +116,11 @@ function handleMenuIconClick() {
       }
     }
     .avatar {
-      .el-avatar {
+      .el-dropdown {
         display: block;
+        cursor: pointer;
+      }
+      .el-avatar {
         width: 30px;
         height: 30px;
       }
