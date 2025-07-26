@@ -14,9 +14,9 @@ interface ILoginState {
 }
 const useLoginStore = defineStore('login', {
   state: (): ILoginState => ({
-    token: localCache.getCache(ZZ_TOKEN) || '',
-    userInfo: localCache.getCache('userInfo') || {},
-    userMenus: localCache.getCache('userMenus') || [],
+    token: '',
+    userInfo: {},
+    userMenus: [],
     permission: [],
   }),
   actions: {
@@ -54,12 +54,10 @@ const useLoginStore = defineStore('login', {
       this.userMenus = userMenus
       localCache.setCache('userMenus', userMenus)
     },
-    clearLogin() {
-      this.token = ''
-      this.userInfo = {
-        id: '',
-        username: '',
-      }
+    resetStateFromCache() {
+      this.token = localCache.getCache(ZZ_TOKEN)
+      this.userInfo = localCache.getCache('userInfo')
+      this.userMenus = localCache.getCache('userMenus')
     },
   },
 })

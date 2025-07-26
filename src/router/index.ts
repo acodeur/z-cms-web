@@ -1,4 +1,5 @@
 import { ZZ_TOKEN } from '@/global'
+import assistant from '@/utils/assistant'
 import { localCache } from '@/utils/cache'
 import { createRouter, createWebHashHistory } from 'vue-router'
 
@@ -32,6 +33,9 @@ const router = createRouter({
     },
   ],
 })
+
+// 根据获取菜单加载路由
+assistant.loadRouterFromCache(router)
 
 // 路由守卫
 router.beforeEach((to, from, next) => {

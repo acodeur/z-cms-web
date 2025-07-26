@@ -1,13 +1,37 @@
 import { ZZ_TOKEN } from '@/global'
 import { localCache } from './cache'
+import type { Router } from 'vue-router'
 
 class Assistant {
+  private modules: any
+
+  constructor() {
+    this.modules = import.meta.glob(['@/views/**/*.vue'])
+  }
   removeAllCache(): void {
     localCache.removeCache(ZZ_TOKEN)
     localCache.removeCache('userInfo')
     localCache.removeCache('userMenus')
   }
 
+  loadRouterFromCache(router: Router): void {
+    const token = localCache.getCache(ZZ_TOKEN)
+    const userInfo = localCache.getCache('userInfo')
+    const userMenus = localCache.getCache('userMenus')
+    if (token && userInfo && userMenus) {
+      for (const menu of userMenus) {
+        for (const subMenu of menu.children) {
+          const componentName = this.getComponentNameFromUrlPath(subMenu.url)
+          const componentPath = '/src/views/home' + `${subMenu.url}/${componentName}.vue`
+          router.addRoute('Home', {
+            path: subMenu.url,
+            name: subMenu.name,
+            component: this.modules[componentPath],
+          })
+        }
+      }
+    }
+  }
   getComponentNameFromUrlPath(urlPath: string): string {
     const parts = urlPath.split('/')
     if (parts.length === 1) {

@@ -39,9 +39,8 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 import useLoginStore from '@/stores/login/login'
+import router from '@/router'
 import { storeToRefs } from 'pinia'
-import { useRouter } from 'vue-router'
-import assistant from '@/utils/assistant'
 
 const props = defineProps({
   collapse: {
@@ -51,18 +50,6 @@ const props = defineProps({
 })
 
 const { userMenus } = storeToRefs(useLoginStore())
-const router = useRouter()
-for (const menu of userMenus.value) {
-  for (const subMenu of menu.children) {
-    const componentName = assistant.getComponentNameFromUrlPath(subMenu.url)
-    const componentPath = '../../views/home' + `${subMenu.url}/${componentName}.vue`
-    router.addRoute('Home', {
-      path: subMenu.url,
-      name: subMenu.name,
-      component: () => import(`${componentPath}`),
-    })
-  }
-}
 
 const handleOpen = (key: string, keyPath: string[]) => {
   console.log(key, keyPath)
