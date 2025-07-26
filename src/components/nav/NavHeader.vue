@@ -2,7 +2,9 @@
   <div class="header">
     <div class="left">
       <div class="icon">
-        <el-icon size="25"><Fold /></el-icon>
+        <el-icon size="25" @click="handleMenuIconClick">
+          <component :is="isCollapse ? 'Fold' : 'Expand'" />
+        </el-icon>
       </div>
       <div class="title">
         <el-breadcrumb separator="/">
@@ -18,8 +20,12 @@
           <span class="is-dot"></span>
           <el-icon><Bell /></el-icon>
         </span>
-        <span><el-icon><Setting /></el-icon></span>
-        <span><el-icon><Share /></el-icon></span>
+        <span
+          ><el-icon><Setting /></el-icon
+        ></span>
+        <span
+          ><el-icon><Share /></el-icon
+        ></span>
       </div>
       <div class="avatar">
         <el-avatar
@@ -30,7 +36,17 @@
   </div>
 </template>
 
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import { ref } from 'vue'
+
+const emit = defineEmits(['handleCollapse'])
+
+const isCollapse = ref(false)
+function handleMenuIconClick() {
+  isCollapse.value = !isCollapse.value
+  emit('handleCollapse', isCollapse.value)
+}
+</script>
 
 <style lang="less" scoped>
 .header {

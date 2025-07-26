@@ -1,8 +1,10 @@
 <template>
   <div class="menu">
     <div class="logo">
-      <img src="@/assets/img/logo.svg" alt="Logo" />
-      <span class="title">ZZone管理系统</span>
+      <img :class="collapse ? 'collapse' : 'expand'" src="@/assets/img/logo.svg" alt="Logo" />
+      <transition name="fade">
+        <span v-if="!collapse" class="title">ZZone后台管理系统</span>
+      </transition>
     </div>
     <div class="menu-container">
       <el-menu
@@ -10,7 +12,7 @@
         text-color="#b7bdc3"
         active-text-color="#fff"
         background-color="#001529"
-        :collapse="false"
+        :collapse="collapse"
         @open="handleOpen"
         @close="handleClose"
       >
@@ -37,9 +39,15 @@ import { ref } from 'vue'
 import useLoginStore from '@/stores/login/login'
 import { storeToRefs } from 'pinia'
 
+const props = defineProps({
+  collapse: {
+    type: Boolean,
+    default: false,
+  },
+})
+
 const { userMenus } = storeToRefs(useLoginStore())
 
-const isCollapse = ref(true)
 const handleOpen = (key: string, keyPath: string[]) => {
   console.log(key, keyPath)
 }
@@ -58,11 +66,19 @@ const handleClose = (key: string, keyPath: string[]) => {
     height: 28px;
     align-items: center;
     justify-items: flex-start;
-    padding: 10px 0 0 10px;
+    padding: 10px 0 0 20px;
 
     img {
-      width: 10%;
-      transform: rotate(-180deg);
+      width: 25px;
+      height: 25px;
+    }
+    img.collapse {
+      transform: rotate(180deg);
+      transition: all 0.3s ease-in;
+    }
+    img.expand {
+      transform: rotate(0deg);
+      transition: all 0.3s ease-in;
     }
     .title {
       font-size: 16px;
@@ -76,7 +92,6 @@ const handleClose = (key: string, keyPath: string[]) => {
   .menu-container {
     width: 100%;
     height: 100%;
-    padding: 10px;
   }
   .el-menu {
     border-right: none;
@@ -93,5 +108,15 @@ const handleClose = (key: string, keyPath: string[]) => {
       }
     }
   }
+}
+
+.fade-enter-active, .fade-leave-active {
+  transition: opacity .5s;
+}
+.fade-enter, .fade-leave-to {
+  opacity: 0;
+}
+.fade-element {
+  transition: opacity .5s;
 }
 </style>

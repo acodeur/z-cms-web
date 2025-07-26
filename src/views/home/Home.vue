@@ -1,12 +1,12 @@
 <template>
   <div class="home">
     <el-container class="home-container">
-      <el-aside width="200px">
-        <nav-menu></nav-menu>
+      <el-aside :width="isCollapse ? '60px' : '210px'">
+        <nav-menu :collapse="isCollapse"></nav-menu>
       </el-aside>
       <el-container>
         <el-header height="50px">
-          <nav-header></nav-header>
+          <nav-header @handle-collapse="handleCollapse" ></nav-header>
         </el-header>
         <el-main>Main</el-main>
         <el-footer height="50px"> Copyright © 2025 Zzone </el-footer>
@@ -21,6 +21,12 @@ import router from '@/router'
 import useCounterStore from '@/stores/counter'
 import { localCache } from '@/utils/cache'
 import { NavMenu, NavHeader, NavFooter } from '@/components/nav'
+import { ref } from 'vue'
+
+const isCollapse = ref(false)
+function handleCollapse(collapse: boolean) {
+  isCollapse.value = collapse
+}
 </script>
 
 <style lang="less" scoped>
@@ -36,6 +42,7 @@ import { NavMenu, NavHeader, NavFooter } from '@/components/nav'
       background-color: #001529;
       scrollbar-width: none; /* firefox */
       -ms-overflow-style: none; /* IE 10+ */
+      transition: width 0.3s ease-in-out;
 
       &::-webkit-scrollbar {
         display: none;
