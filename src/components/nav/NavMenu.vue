@@ -8,7 +8,7 @@
     </div>
     <div class="menu-container">
       <el-menu
-        default-active=""
+        :default-active="activeIndex"
         text-color="#b7bdc3"
         active-text-color="#fff"
         background-color="#001529"
@@ -37,7 +37,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue'
+import { computed, ref } from 'vue'
 import useLoginStore from '@/stores/login/login'
 import router from '@/router'
 import { storeToRefs } from 'pinia'
@@ -50,6 +50,22 @@ const props = defineProps({
 })
 
 const { userMenus } = storeToRefs(useLoginStore())
+const activeIndex = computed(() => {
+  let firstMenu = null
+  for (const menu of userMenus.value) {
+    for (const subItem of menu.children) {
+      if (subItem && !firstMenu) {
+        firstMenu = subItem
+      }
+      if (subItem.url === router.currentRoute.value.path) {
+        return subItem.id + ''
+      }
+    }
+  }
+  if (firstMenu) {
+    return firstMenu.id + ''
+  }
+})
 
 const handleOpen = (key: string, keyPath: string[]) => {
   console.log(key, keyPath)
