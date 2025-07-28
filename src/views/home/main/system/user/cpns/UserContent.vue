@@ -20,11 +20,13 @@
       ></el-table-column>
       <el-table-column prop="updateAt" label="更新时间" align="center" :formatter="formatUserDate">
       </el-table-column>
-      <el-table-column label="操作">
+      <el-table-column label="操作" align="center">
         <template #default="scope">
-          <el-button size="small" @click="handleEdit(scope.$index, scope.row)"> 编辑 </el-button>
-          <el-button size="small" type="danger" @click="handleDelete(scope.$index, scope.row)">
-            删除
+          <el-button size="small" class="op-btn" text type="primary" @click="handleEdit(scope.$index, scope.row)">
+            <el-icon><Edit /></el-icon> 编辑
+          </el-button>
+          <el-button size="small" class="op-btn" text type="danger" @click="handleDelete(scope.$index, scope.row)">
+            <el-icon><Delete /></el-icon> 删除
           </el-button>
         </template>
       </el-table-column>
@@ -55,5 +57,9 @@ function formatUserDate(row: any, column: any, cellValue: any, index: number) {
   padding: 5px;
   background-color: #f0f0f0;
   border-radius: 8px;
+
+  .op-btn {
+    margin: 0 5px;
+  }
 }
 </style>

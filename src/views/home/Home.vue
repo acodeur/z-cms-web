@@ -18,10 +18,6 @@
 </template>
 
 <script setup lang="ts">
-import { ZZ_TOKEN } from '@/global'
-import router from '@/router'
-import useCounterStore from '@/stores/counter'
-import { localCache } from '@/utils/cache'
 import { NavMenu, NavHeader, NavFooter } from '@/components/nav'
 import { ref } from 'vue'
 

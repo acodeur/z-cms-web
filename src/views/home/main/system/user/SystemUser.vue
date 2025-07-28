@@ -4,27 +4,68 @@
       <user-search></user-search>
     </div>
     <div class="content">
+      <div class="header">
+        <h3 class="title">用户列表</h3>
+        <div class="button">
+          <el-button type="primary" class="add-btn" @click="handleAddUser">添加用户</el-button>
+        </div>
+      </div>
       <user-content></user-content>
     </div>
     <div class="pagination">
       <el-pagination
         background
         layout="total, prev, pager, next"
-        :total="1000"
+        :total="totalCount"
+        v-model:page-size="pageSize"
+        :pager-count="7"
+        @current-change="handleCurrentChange"
       ></el-pagination>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
+import { storeToRefs } from 'pinia'
 import UserSearch from './cpns/UserSearch.vue'
 import UserContent from './cpns/UserContent.vue'
+import useSystemStore from '@/stores/home/system/system'
+import { ref } from 'vue'
 
+const { totalCount } = storeToRefs(useSystemStore())
+const pageSize = ref(10)
+
+function handleAddUser() {
+  console.log('添加用户')
+}
+
+function handleCurrentChange(currentPage: number) {
+  console.log('分页切换', currentPage)
+}
 </script>
 
 <style lang="less" scoped>
 .system-user {
   background-color: #f0f0f0;
   border-radius: 8px;
+
+  .content {
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      padding: 5px;
+
+      .add-btn {
+        width: 80px;
+      }
+    }
+  }
+
+  .pagination {
+    width: 20%;
+    text-align: center;
+    margin: 0 auto;
+  }
 }
 </style>

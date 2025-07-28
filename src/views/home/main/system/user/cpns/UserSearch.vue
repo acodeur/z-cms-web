@@ -52,6 +52,7 @@
 import { ref, reactive } from 'vue'
 import zhCn from 'element-plus/es/locale/lang/zh-cn'
 import useSystemStore from '@/stores/home/system/system'
+import type { ISystemUserSearchReq } from '@/types'
 const searchForm = reactive({
   username: '',
   realname: '',
@@ -63,7 +64,12 @@ const searchFormRef = ref()
 const systemStore = useSystemStore()
 
 function handleSearch() {
-  systemStore.postSystemUserData(searchForm)
+  const searchReq: ISystemUserSearchReq = {
+    ...searchForm,
+    pageNum: 1,
+    pageSize: 10,
+  }
+  systemStore.postSystemUserData(searchReq)
 }
 
 function handleReset() {
@@ -73,7 +79,7 @@ function handleReset() {
 
 <style lang="less" scoped>
 .user-search {
-  padding: 15px;
+  padding: 15px 5px;
   background-color: #f0f0f0;
   border-radius: 8px;
 
