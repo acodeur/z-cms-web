@@ -1,4 +1,4 @@
-import type { IServiceAccount } from '..'
+import type { IServiceAccount } from '../type'
 import zRequest from '..'
 
 export function accountLoginApi(account: IServiceAccount): Promise<any> {

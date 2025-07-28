@@ -4,7 +4,6 @@ import type { IAccount } from '@/types'
 import { defineStore } from 'pinia'
 import { ZZ_TOKEN } from '@/global'
 import { localCache } from '@/utils/cache'
-import useHomeStore from '../home/home'
 
 interface ILoginState {
   token: string
@@ -32,9 +31,6 @@ const useLoginStore = defineStore('login', {
         this.setUserInfo(userInfoResult.data)
         const userMenusResult = await getUserMenusApi(this.userInfo.role.id)
         this.setUserMenus(userMenusResult.data)
-        // 请求所有roles/departments数据
-        const homeStore = useHomeStore()
-        // homeStore.getRolesAndDepartments()
         // 跳转到主页面
         router.push({ name: 'Home' })
       } else {
