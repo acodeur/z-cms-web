@@ -60,6 +60,7 @@ function handleCollapse(collapse: boolean) {
 
     .el-main {
       background-color: #f0f2f5;
+      overflow-x: hidden;
     }
 
     .el-footer {
