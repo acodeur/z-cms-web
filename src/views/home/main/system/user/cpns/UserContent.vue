@@ -1,6 +1,6 @@
 <template>
   <div class="user-content">
-    <el-table :data="userList">
+    <el-table :data="userList" stripe>
       <el-table-column type="index" label="序号" align="center" width="60"> </el-table-column>
       <!-- <el-table-column prop="id"  width="100"> </el-table-column> -->
       <el-table-column prop="name" label="用户名" align="center"> </el-table-column>
@@ -52,7 +52,7 @@ function formatUserDate(row: any, column: any, cellValue: any, index: number) {
 
 <style lang="less" scoped>
 .user-content {
-  padding: 20px;
+  padding: 5px;
   background-color: #f0f0f0;
   border-radius: 8px;
 }
