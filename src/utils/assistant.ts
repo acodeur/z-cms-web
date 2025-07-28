@@ -14,13 +14,23 @@ class Assistant {
     localCache.removeCache('userMenus')
   }
 
-  loadRouterFromCache(router: Router): void {
+  loadRouteFromCache(router: Router): void {
     const token = localCache.getCache(ZZ_TOKEN)
     const userInfo = localCache.getCache('userInfo')
     const userMenus = localCache.getCache('userMenus')
     if (token && userInfo && userMenus) {
       for (const menu of userMenus) {
+        let firstSubMenu = null
         for (const subMenu of menu.children) {
+          // set the first submenu as the default parent's menu route's redirect
+          if (!firstSubMenu && subMenu) {
+            router.addRoute('Home', {
+              path: menu.url,
+              name: menu.name,
+              redirect: subMenu.url,
+            })
+            firstSubMenu = subMenu
+          }
           const componentName = this.getComponentNameFromUrlPath(subMenu.url)
           const componentPath = '/src/views/home' + `${subMenu.url}/${componentName}.vue`
           router.addRoute('Home', {

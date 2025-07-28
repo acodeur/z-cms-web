@@ -8,9 +8,9 @@
       </div>
       <div class="title">
         <el-breadcrumb separator="/">
-          <el-breadcrumb-item>首页</el-breadcrumb-item>
-          <el-breadcrumb-item>用户管理</el-breadcrumb-item>
-          <el-breadcrumb-item>角色列表</el-breadcrumb-item>
+          <template v-for="item in breadcrumb" :key="item.name">
+            <el-breadcrumb-item v-if="item.path" :to="item.path">{{ item.name }}</el-breadcrumb-item>
+          </template>
         </el-breadcrumb>
       </div>
     </div>
@@ -46,9 +46,11 @@
 
 <script setup lang="ts">
 import router from '@/router'
+import useLoginStore from '@/stores/login/login'
+import type { IBreadcrumb } from '@/types'
 import assistant from '@/utils/assistant'
-import { localCache } from '@/utils/cache'
-import { ref } from 'vue'
+import { computed, ref } from 'vue'
+import { useRoute, type RouteLocation } from 'vue-router'
 
 const emit = defineEmits(['handleCollapse'])
 
@@ -56,6 +58,25 @@ const isCollapse = ref(false)
 function handleMenuIconClick() {
   isCollapse.value = !isCollapse.value
   emit('handleCollapse', isCollapse.value)
+}
+
+// breadcrumb
+const route = useRoute()
+const loginStore = useLoginStore()
+const breadcrumb = computed(() => getBreadcrumb(route, loginStore.userMenus))
+function getBreadcrumb(route: RouteLocation, userMenus: any[]): IBreadcrumb[] {
+  const breadcrumb: IBreadcrumb[] = []
+  const path = route.path
+  for (const menu of userMenus) {
+    for (const subItem of menu.children) {
+      if (subItem.url === path) {
+        breadcrumb.push({ path: menu.url, name: menu.name })
+        breadcrumb.push({ path: subItem.url, name: subItem.name })
+        return breadcrumb
+      }
+    }
+  }
+  return breadcrumb
 }
 
 const userCenter = () => {

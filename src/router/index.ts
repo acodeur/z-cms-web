@@ -35,7 +35,7 @@ const router = createRouter({
 })
 
 // 根据获取菜单加载路由
-assistant.loadRouterFromCache(router)
+assistant.loadRouteFromCache(router)
 
 // 路由守卫
 router.beforeEach((to, from, next) => {
