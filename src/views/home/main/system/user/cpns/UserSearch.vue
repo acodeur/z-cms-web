@@ -53,6 +53,16 @@ import { ref, reactive } from 'vue'
 import zhCn from 'element-plus/es/locale/lang/zh-cn'
 import useSystemStore from '@/stores/home/system/system'
 import type { ISystemUserSearchReq } from '@/types'
+
+const props = defineProps({
+  pagination: {
+    type: Object,
+    default: () => ({}),
+  },
+})
+defineExpose({
+  handleSearch,
+})
 const searchForm = reactive({
   username: '',
   realname: '',
@@ -66,8 +76,8 @@ const systemStore = useSystemStore()
 function handleSearch() {
   const searchReq: ISystemUserSearchReq = {
     ...searchForm,
-    pageNum: 1,
-    pageSize: 10,
+    pageNum: props.pagination.currentPage,
+    pageSize: props.pagination.pageSize,
   }
   systemStore.postSystemUserData(searchReq)
 }
