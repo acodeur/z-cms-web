@@ -47,20 +47,41 @@
       </el-table-column>
     </el-table>
   </div>
+  <user-dialog ref="userDialogRef" type="edit"></user-dialog>
 </template>
 
 <script setup lang="ts">
 import { storeToRefs } from 'pinia'
 import useSystemStore from '@/stores/home/system/system'
 import { formatDate } from '@/utils/format'
+import { ElMessage, ElMessageBox } from 'element-plus'
+import { ref } from 'vue'
+import UserDialog from './UserDialog.vue'
 
-const { userList } = storeToRefs(useSystemStore())
+const emit = defineEmits(['handleReload'])
+
+const systemStore = useSystemStore()
+const { userList } = storeToRefs(systemStore)
+const userDialogRef = ref<InstanceType<typeof UserDialog>>()
 
 function handleEdit(index: number, row: any) {
-  console.log(index, row)
+  userDialogRef.value?.openEditDialog(row)
 }
 function handleDelete(index: number, row: any) {
-  console.log(index, row)
+  ElMessageBox.confirm('此操作将删除该用户, 是否继续?', '提示', {
+    confirmButtonText: '确定',
+    cancelButtonText: '取消',
+    type: 'warning',
+    draggable: true,
+  }).then(() => {
+    // 删除
+    systemStore.deleteSystemUserData(row.id)
+    ElMessage({
+      type: 'success',
+      message: '删除成功!',
+    })
+    emit('handleReload')
+  })
 }
 </script>
 

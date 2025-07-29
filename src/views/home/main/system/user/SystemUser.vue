@@ -14,7 +14,7 @@
           <el-button type="primary" class="add-btn" @click="handleAddUser">添加用户</el-button>
         </div>
       </div>
-      <user-content></user-content>
+      <user-content @handle-reload="handleReload"></user-content>
     </div>
     <div class="pagination">
       <el-config-provider :locale="zhCn">
@@ -32,6 +32,7 @@
       </el-config-provider>
     </div>
   </div>
+  <user-dialog ref="userDialogRef" type="add"></user-dialog>
 </template>
 
 <script setup lang="ts">
@@ -39,6 +40,7 @@ import { storeToRefs } from 'pinia'
 import UserSearch from './cpns/UserSearch.vue'
 import UserContent from './cpns/UserContent.vue'
 import useSystemStore from '@/stores/home/system/system'
+import UserDialog from './cpns/UserDialog.vue'
 import { ref, reactive, onMounted } from 'vue'
 import zhCn from 'element-plus/es/locale/lang/zh-cn'
 
@@ -48,9 +50,10 @@ const pagination = reactive({
   pageSize: 10,
 })
 const userSearchRef = ref<InstanceType<typeof UserSearch>>()
+const userDialogRef = ref<InstanceType<typeof UserDialog>>()
 
 function handleAddUser() {
-  console.log('添加用户')
+  userDialogRef.value?.openAddDialog()
 }
 
 function handleCurrentChange(val: number) {
@@ -66,6 +69,10 @@ function handleSizeChange(val: number) {
 function handleReset() {
   pagination.currentPage = 1
   pagination.pageSize = 10
+  userSearchRef.value?.handleSearch()
+}
+
+function handleReload() {
   userSearchRef.value?.handleSearch()
 }
 

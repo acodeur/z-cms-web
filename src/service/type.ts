@@ -16,6 +16,7 @@ export interface ISystemUser {
   id: number
   name: string
   realname: string
+  password: string
   cellphone: number
   enable: number
   departmentId: number
