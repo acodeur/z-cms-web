@@ -1,7 +1,11 @@
 <template>
   <div class="system-user">
     <div class="search">
-      <user-search ref="userSearchRef" :pagination="pagination"></user-search>
+      <user-search
+        ref="userSearchRef"
+        :pagination="pagination"
+        @handle-reset="handleReset"
+      ></user-search>
     </div>
     <div class="content">
       <div class="header">
@@ -56,6 +60,12 @@ function handleCurrentChange(val: number) {
 
 function handleSizeChange(val: number) {
   pagination.pageSize = val
+  userSearchRef.value?.handleSearch()
+}
+
+function handleReset() {
+  pagination.currentPage = 1
+  pagination.pageSize = 10
   userSearchRef.value?.handleSearch()
 }
 

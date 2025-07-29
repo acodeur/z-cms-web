@@ -63,6 +63,7 @@ const props = defineProps({
 defineExpose({
   handleSearch,
 })
+const emit = defineEmits(['handleReset'])
 const searchForm = reactive({
   username: '',
   realname: '',
@@ -84,6 +85,7 @@ function handleSearch() {
 
 function handleReset() {
   searchFormRef.value?.resetFields()
+  emit('handleReset')
 }
 </script>
 
