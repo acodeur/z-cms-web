@@ -19,7 +19,7 @@
         <template v-for="item in userMenus" :key="item.id">
           <el-sub-menu :index="item.id + ''">
             <template #title>
-              <el-icon>
+              <el-icon size="1rem">
                 <component :is="item.icon.replace('el-icon-', '')" />
               </el-icon>
               <span>{{ item.name }}</span>
