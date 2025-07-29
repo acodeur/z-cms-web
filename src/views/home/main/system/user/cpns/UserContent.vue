@@ -8,24 +8,39 @@
       <el-table-column prop="cellphone" label="手机号" align="center"> </el-table-column>
       <el-table-column prop="enable" label="状态" align="center">
         <template #default="scope">
-          <el-tag v-if="scope.row.enable" type="success">启用</el-tag>
-          <el-tag v-else type="danger">禁用</el-tag>
+          <el-tag :type="scope.row.enable ? 'success' : 'danger'">
+            {{ scope.row.enable ? '启用' : '禁用' }}
+          </el-tag>
         </template>
       </el-table-column>
-      <el-table-column
-        prop="createAt"
-        label="创建时间"
-        align="center"
-        :formatter="formatUserDate"
-      ></el-table-column>
-      <el-table-column prop="updateAt" label="更新时间" align="center" :formatter="formatUserDate">
+      <el-table-column prop="createAt" label="创建时间" align="center">
+        <template #default="scope">
+          {{ formatDate(scope.row.createAt) }}
+        </template>
+      </el-table-column>
+      <el-table-column prop="updateAt" label="更新时间" align="center">
+        <template #default="scope">
+          {{ formatDate(scope.row.updateAt) }}
+        </template>
       </el-table-column>
       <el-table-column label="操作" align="center">
         <template #default="scope">
-          <el-button size="small" class="op-btn" text type="primary" @click="handleEdit(scope.$index, scope.row)">
+          <el-button
+            size="small"
+            class="op-btn"
+            text
+            type="primary"
+            @click="handleEdit(scope.$index, scope.row)"
+          >
             <el-icon><Edit /></el-icon> 编辑
           </el-button>
-          <el-button size="small" class="op-btn" text type="danger" @click="handleDelete(scope.$index, scope.row)">
+          <el-button
+            size="small"
+            class="op-btn"
+            text
+            type="danger"
+            @click="handleDelete(scope.$index, scope.row)"
+          >
             <el-icon><Delete /></el-icon> 删除
           </el-button>
         </template>
@@ -46,9 +61,6 @@ function handleEdit(index: number, row: any) {
 }
 function handleDelete(index: number, row: any) {
   console.log(index, row)
-}
-function formatUserDate(row: any, column: any, cellValue: any, index: number) {
-  return formatDate(cellValue)
 }
 </script>
 

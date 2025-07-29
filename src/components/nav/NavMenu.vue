@@ -63,6 +63,7 @@ const activeIndex = computed(() => {
     }
   }
   if (firstMenu) {
+    router.push(firstMenu.url)
     return firstMenu.id + ''
   }
 })

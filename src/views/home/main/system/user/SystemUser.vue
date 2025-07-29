@@ -13,14 +13,16 @@
       <user-content></user-content>
     </div>
     <div class="pagination">
-      <el-pagination
-        background
-        layout="total, prev, pager, next"
-        :total="totalCount"
-        v-model:page-size="pageSize"
-        :pager-count="7"
-        @current-change="handleCurrentChange"
-      ></el-pagination>
+      <el-config-provider :locale="zhCn">
+        <el-pagination
+          background
+          layout="total, prev, pager, next"
+          :total="totalCount"
+          v-model:page-size="pageSize"
+          :pager-count="7"
+          @current-change="handleCurrentChange"
+        ></el-pagination>
+      </el-config-provider>
     </div>
   </div>
 </template>
@@ -31,6 +33,7 @@ import UserSearch from './cpns/UserSearch.vue'
 import UserContent from './cpns/UserContent.vue'
 import useSystemStore from '@/stores/home/system/system'
 import { ref } from 'vue'
+import zhCn from 'element-plus/es/locale/lang/zh-cn'
 
 const { totalCount } = storeToRefs(useSystemStore())
 const pageSize = ref(10)
@@ -63,9 +66,8 @@ function handleCurrentChange(currentPage: number) {
   }
 
   .pagination {
-    width: 20%;
-    text-align: center;
-    margin: 0 auto;
+    display: flex;
+    justify-content: center;
   }
 }
 </style>
