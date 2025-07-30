@@ -6,6 +6,7 @@ import {
 } from '@/service/home/system/system'
 import type { ISystemUserReq, ISystemUser } from '@/service/type'
 import type { ISystemUserSearchReq } from '@/types'
+import { formatDate } from '@/utils/format'
 import { defineStore } from 'pinia'
 
 interface ISystemState {
@@ -49,21 +50,33 @@ const useSystemStore = defineStore('system', {
     },
 
     async addSystemUser(userData: any) {
-      const res = await addSystemUserApi(userData)
-      if (res.code !== 0) {
-        throw new Error(res.message)
-      }
-    },
-
-    async editSystemUser(userData: any) {
+      const dateTime = new Date()
       const systemUser: ISystemUser = {
         ...userData,
         enable: Number(userData.enable),
+        createAt: formatDate(dateTime),
+        updateAt: formatDate(dateTime),
       }
-      const res = await editSystemUserApi(userData)
+      delete systemUser.id
+      const res = await addSystemUserApi(systemUser)
       if (res.code !== 0) {
-        throw new Error(res.message)
+        throw new Error(res.data)
       }
+      return res
+    },
+
+    async editSystemUser(userData: any) {
+      const dateTime = new Date()
+      const systemUser: ISystemUser = {
+        ...userData,
+        enable: Number(userData.enable),
+        updateAt: formatDate(dateTime),
+      }
+      const res = await editSystemUserApi(systemUser)
+      if (res.code !== 0) {
+        throw new Error(res.data)
+      }
+      return res
     },
   },
 })

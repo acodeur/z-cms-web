@@ -47,7 +47,7 @@
       </el-table-column>
     </el-table>
   </div>
-  <user-dialog ref="userDialogRef" type="edit"></user-dialog>
+  <user-dialog ref="userDialogRef" type="edit" @handle-reload="emit('handleReload')"></user-dialog>
 </template>
 
 <script setup lang="ts">

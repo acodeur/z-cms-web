@@ -13,7 +13,7 @@ export interface ISystemUserReq {
   createAt?: string
 }
 export interface ISystemUser {
-  id: number
+  id?: number
   name: string
   realname: string
   password: string
@@ -22,5 +22,5 @@ export interface ISystemUser {
   departmentId: number
   roleId: number
   createAt: string
-  updateAt: string
+  updateAt?: string
 }

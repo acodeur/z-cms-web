@@ -1,5 +1,5 @@
 import zRequest from '@/service'
-import type { ISystemUserReq } from '@/service/type'
+import type { ISystemUserReq, ISystemUser } from '@/service/type'
 
 export function getSystemUserDataApi(systemUserReq: ISystemUserReq): Promise<any> {
   return zRequest.post({
@@ -14,16 +14,16 @@ export function deleteSystemUserDataApi(userId: string): Promise<any> {
   })
 }
 
-export function addSystemUserApi(userData: ISystemUserReq): Promise<any> {
+export function addSystemUserApi(userData: ISystemUser): Promise<any> {
   return zRequest.post({
     url: '/users',
     data: userData,
   })
 }
 
-export function editSystemUserApi(userData: ISystemUserReq): Promise<any> {
+export function editSystemUserApi(userData: ISystemUser): Promise<any> {
   return zRequest.patch({
-    url: '/users',
+    url: `/users/${userData.id}`,
     data: userData,
   })
 }

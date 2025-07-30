@@ -32,7 +32,7 @@
       </el-config-provider>
     </div>
   </div>
-  <user-dialog ref="userDialogRef" type="add"></user-dialog>
+  <user-dialog ref="userDialogRef" type="add" @handle-reload="handleReload"></user-dialog>
 </template>
 
 <script setup lang="ts">
