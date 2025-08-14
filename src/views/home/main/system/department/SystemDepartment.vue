@@ -1,11 +1,11 @@
 <template>
   <div class="system-department">
-    <h2>system-department</h2>
+    <page-content :></page-content>
   </div>
 </template>
 
 <script setup lang="ts">
-
+import PageContent from '@/components/page/PageContent.vue'
 </script>
 
 <style lang="less" scoped>
