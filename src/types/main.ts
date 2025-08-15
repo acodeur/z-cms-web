@@ -12,3 +12,13 @@ export interface ISystemUserSearchReq {
   pageNum: number
   pageSize: number
 }
+
+export interface ISystemDepartmentSearchReq {
+  // name?: string
+  // realname?: string
+  // cellphone?: number
+  // enable?: number
+  // createAt?: string
+  pageNum: number
+  pageSize: number
+}

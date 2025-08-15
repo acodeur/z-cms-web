@@ -1,6 +1,6 @@
 <template>
   <div class="user-content">
-    <el-table :data="userList" stripe>
+    <el-table :data="user.dataList" stripe>
       <el-table-column type="index" label="序号" align="center" width="60"> </el-table-column>
       <!-- <el-table-column prop="id"  width="100"> </el-table-column> -->
       <el-table-column prop="name" label="用户名" align="center"> </el-table-column>
@@ -61,7 +61,7 @@ import UserDialog from './UserDialog.vue'
 const emit = defineEmits(['handleReload'])
 
 const systemStore = useSystemStore()
-const { userList } = storeToRefs(systemStore)
+const { user } = storeToRefs(systemStore)
 const userDialogRef = ref<InstanceType<typeof UserDialog>>()
 
 function handleEdit(index: number, row: any) {

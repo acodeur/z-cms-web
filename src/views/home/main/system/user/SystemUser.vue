@@ -22,7 +22,7 @@
           background
           layout="total, prev, pager, next, sizes"
           :page-sizes="[5, 10, 20, 50]"
-          :total="totalCount"
+          :total="user.totalCount"
           v-model:page-size="pagination.pageSize"
           v-model:current-page="pagination.currentPage"
           :pager-count="7"
@@ -44,7 +44,7 @@ import UserDialog from './cpns/UserDialog.vue'
 import { ref, reactive, onMounted } from 'vue'
 import zhCn from 'element-plus/es/locale/lang/zh-cn'
 
-const { totalCount } = storeToRefs(useSystemStore())
+const { user } = storeToRefs(useSystemStore())
 const pagination = reactive({
   currentPage: 1,
   pageSize: 10,

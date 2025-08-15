@@ -1,6 +1,7 @@
 import zRequest from '@/service'
-import type { ISystemUserReq, ISystemUser } from '@/service/type'
+import type { ISystemUserReq, ISystemUser, ISystemDepartmentReq } from '@/service/type'
 
+// 系统用户
 export function getSystemUserDataApi(systemUserReq: ISystemUserReq): Promise<any> {
   return zRequest.post({
     url: '/users/list',
@@ -25,5 +26,21 @@ export function editSystemUserApi(userData: ISystemUser): Promise<any> {
   return zRequest.patch({
     url: `/users/${userData.id}`,
     data: userData,
+  })
+}
+
+//系统部门
+export function getSystemDepartmentDataApi(
+  systemDepartmentReq: ISystemDepartmentReq,
+): Promise<any> {
+  return zRequest.post({
+    url: '/department/list',
+    data: systemDepartmentReq,
+  })
+}
+
+export function deleteSystemDepartmentDataApi(departmentId: string): Promise<any> {
+  return zRequest.delete({
+    url: `/department/${departmentId}`,
   })
 }

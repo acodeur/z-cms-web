@@ -24,3 +24,8 @@ export interface ISystemUser {
   createAt: string
   updateAt?: string
 }
+
+export interface ISystemDepartmentReq {
+  offset: number
+  size: number
+}

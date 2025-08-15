@@ -8,6 +8,8 @@ export {}
 /* prettier-ignore */
 declare module 'vue' {
   export interface GlobalComponents {
+    BarEchart: typeof import('./src/components/echarts/BarEchart.vue')['default']
+    BaseEchart: typeof import('./src/components/echarts/BaseEchart.vue')['default']
     ElAside: typeof import('element-plus/es')['ElAside']
     ElAvatar: typeof import('element-plus/es')['ElAvatar']
     ElBadge: typeof import('element-plus/es')['ElBadge']
@@ -60,6 +62,7 @@ declare module 'vue' {
     PageContent: typeof import('./src/components/page/PageContent.vue')['default']
     PageDialog: typeof import('./src/components/page/PageDialog.vue')['default']
     PageSearch: typeof import('./src/components/page/PageSearch.vue')['default']
+    PieEchart: typeof import('./src/components/echarts/PieEchart.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
   }

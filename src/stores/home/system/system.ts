@@ -3,21 +3,35 @@ import {
   getSystemUserDataApi,
   addSystemUserApi,
   editSystemUserApi,
+  getSystemDepartmentDataApi,
+  deleteSystemDepartmentDataApi,
 } from '@/service/home/system/system'
-import type { ISystemUserReq, ISystemUser } from '@/service/type'
-import type { ISystemUserSearchReq } from '@/types'
+import type { ISystemUserReq, ISystemUser, ISystemDepartmentReq } from '@/service/type'
+import type { ISystemUserSearchReq, ISystemDepartmentSearchReq } from '@/types'
 import { formatDate } from '@/utils/format'
 import { defineStore } from 'pinia'
 
 interface ISystemState {
-  userList: ISystemUser[]
-  totalCount: number
+  user: {
+    dataList: ISystemUser[]
+    totalCount: number
+  }
+  department: {
+    dataList: any[]
+    totalCount: number
+  }
 }
 
 const useSystemStore = defineStore('system', {
   state: (): ISystemState => ({
-    userList: [],
-    totalCount: 0,
+    user: {
+      dataList: [],
+      totalCount: 0,
+    },
+    department: {
+      dataList: [],
+      totalCount: 0,
+    },
   }),
   actions: {
     async getSystemUserData(searchReq: ISystemUserSearchReq) {
@@ -38,8 +52,8 @@ const useSystemStore = defineStore('system', {
       if (res.code !== 0) {
         throw new Error(res.message)
       }
-      this.userList = res.data.list
-      this.totalCount = res.data.totalCount
+      this.user.dataList = res.data.list
+      this.user.totalCount = res.data.totalCount
     },
 
     async deleteSystemUserData(userId: string) {
@@ -77,6 +91,26 @@ const useSystemStore = defineStore('system', {
         throw new Error(res.data)
       }
       return res
+    },
+
+    async getSystemDepartmentData(searchReq: ISystemDepartmentSearchReq) {
+      const systemDepartmentReq: ISystemDepartmentReq = {
+        offset: searchReq.pageSize * (searchReq.pageNum - 1),
+        size: searchReq.pageSize,
+      }
+      const res = await getSystemDepartmentDataApi(systemDepartmentReq)
+      if (res.code !== 0) {
+        throw new Error(res.message)
+      }
+      this.department.dataList = res.data.list
+      this.department.totalCount = res.data.totalCount
+    },
+
+    async deleteSystemDepartmentData(departmentId: string) {
+      const res = await deleteSystemDepartmentDataApi(departmentId)
+      if (res.code !== 0) {
+        throw new Error(res.message)
+      }
     },
   },
 })
