@@ -1,5 +1,6 @@
 <template>
   <div class="system-department">
+    <page-search></page-search>
     <page-content
       :config="contentConfig"
       :data-list="dataList"
@@ -18,7 +19,6 @@ import PageContent from '@/components/page/PageContent.vue'
 import contentConfig from './config/content.config'
 import useSystemStore from '@/stores/home/system/system'
 import { storeToRefs } from 'pinia'
-import { computed } from 'vue'
 import { ElMessage, ElMessageBox } from 'element-plus'
 
 const systemStore = useSystemStore()
