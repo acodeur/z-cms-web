@@ -22,15 +22,13 @@ import { computed } from 'vue'
 import { ElMessage, ElMessageBox } from 'element-plus'
 
 const systemStore = useSystemStore()
-const { department } = storeToRefs(systemStore)
 //初始化值
-const dataList = computed(() => department.value.dataList)
-const totalCount = computed(() => department.value.totalCount)
+const { dataList, totalCount } = storeToRefs(systemStore)
 const systemDepartmentSearchReq = {
   pageNum: contentConfig.pagination.currentPage,
   pageSize: contentConfig.pagination.pageSize,
 }
-systemStore.getSystemDepartmentData(systemDepartmentSearchReq)
+systemStore.getSystemData(contentConfig.pageName, systemDepartmentSearchReq)
 
 // 响应CRUD
 function handleAdd() {
@@ -47,7 +45,7 @@ function handleDelete(index: number, row: any) {
     draggable: true,
   }).then(() => {
     // 删除
-    systemStore.deleteSystemDepartmentData(row.id)
+    systemStore.deleteSystemData(contentConfig.pageName, row.id)
     ElMessage({
       type: 'success',
       message: '删除成功!',
@@ -60,7 +58,7 @@ function handleCurrentPageChange(val: number) {
     pageNum: val,
     pageSize: contentConfig.pagination.pageSize,
   }
-  systemStore.getSystemDepartmentData(systemDepartmentSearchReq)
+  systemStore.getSystemData(contentConfig.pageName, systemDepartmentSearchReq)
 }
 function handlePageSizeChange(val: number) {
   contentConfig.pagination.pageSize = val
@@ -68,7 +66,7 @@ function handlePageSizeChange(val: number) {
     pageNum: contentConfig.pagination.currentPage,
     pageSize: val,
   }
-  systemStore.getSystemDepartmentData(systemDepartmentSearchReq)
+  systemStore.getSystemData(contentConfig.pageName, systemDepartmentSearchReq)
 }
 </script>
 

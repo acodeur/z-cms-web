@@ -1,5 +1,6 @@
 import zRequest from '@/service'
 import type { ISystemUserReq, ISystemUser, ISystemDepartmentReq } from '@/service/type'
+import apiMap from '@/global/api'
 
 // 系统用户
 export function getSystemUserDataApi(systemUserReq: ISystemUserReq): Promise<any> {
@@ -29,18 +30,17 @@ export function editSystemUserApi(userData: ISystemUser): Promise<any> {
   })
 }
 
-//系统部门
-export function getSystemDepartmentDataApi(
-  systemDepartmentReq: ISystemDepartmentReq,
-): Promise<any> {
+//页面CRUD
+export function getSystemDataApi(apiKey: string, systemReq: any): Promise<any> {
   return zRequest.post({
-    url: '/department/list',
-    data: systemDepartmentReq,
+    url: apiMap[apiKey].list.url,
+    data: systemReq,
   })
 }
 
-export function deleteSystemDepartmentDataApi(departmentId: string): Promise<any> {
+export function deleteSystemDataApi(apiKey: string, id: string): Promise<any> {
+  const url = apiMap[apiKey].delete.url.format({ id })
   return zRequest.delete({
-    url: `/department/${departmentId}`,
+    url: url,
   })
 }

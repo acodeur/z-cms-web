@@ -1,28 +1,18 @@
-const apiMap = {
-  login: {
-    url: '/login',
-    method: 'post',
-  },
-  logout: {
-    url: '/logout',
-    method: 'post',
-  },
-  home: {
-    url: '/home',
-    method: 'get',
-  },
-  userInfo: {
-    url: '/user/info',
-    method: 'get',
-  },
-  userMenus: {
-    url: '/role/menus',
-    method: 'get',
-  },
+interface IApiMap {
+  [key: string]: {
+    [key: string]: {
+      url: string
+    }
+  }
 }
 
-export function getApi(url: string) {
-  return apiMap[url]
+const apiMap: IApiMap = {
+  department: {
+    list: { url: '/department/list' },
+    add: { url: '/department' },
+    edit: { url: '/department/${id}' },
+    delete: { url: '/department/${id}' },
+  },
 }
 
 export default apiMap

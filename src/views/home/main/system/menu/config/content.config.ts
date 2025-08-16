@@ -5,17 +5,21 @@ const contentConfig = {
     btnTxt: '新建菜单',
   },
   propsList: [
-    { type: 'index', label: '序号', width: '80px', align: 'center' },
-    { type: 'normal', label: '菜单名称', prop: 'name', width: '150px', align: 'center' },
-    { type: 'normal', label: '上级菜单', prop: 'parentId', width: '150px', align: 'center' },
-    { type: 'timer', label: '创建时间', prop: 'createAt', align: 'center' },
-    { type: 'timer', label: '更新时间', prop: 'updateAt', align: 'center' },
-    { type: 'operation', label: '操作', width: '300px', align: 'center' },
+    { label: '菜单名称', prop: 'name', width: '180px' },
+    { label: '级别', prop: 'type', width: '120px' },
+    { label: '菜单url', prop: 'url', width: '150px' },
+    { label: '菜单icon', prop: 'icon', width: '200px' },
+    { label: '排序', prop: 'sort', width: '120px' },
+    { label: '权限', prop: 'permission', width: '150px' },
+    { label: '上级菜单', prop: 'parentId', width: '150px' },
+    { type: 'timer', label: '创建时间', prop: 'createAt' },
+    { type: 'timer', label: '更新时间', prop: 'updateAt' },
+    { type: 'operation', label: '操作', width: '150px' },
   ],
   pagination: {
     currentPage: 1,
     pageSize: 10,
-  }
+  },
 }
 
 export default contentConfig
