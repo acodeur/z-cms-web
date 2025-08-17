@@ -14,7 +14,7 @@
         </el-col>
         <el-col :span="8">
           <el-form-item label="手机号" prop="cellphone">
-            <el-input v-model="searchForm.phone" placeholder="请输入手机号" />
+            <el-input v-model="searchForm.phone" placeholder="请输入手机号"/>
           </el-form-item>
         </el-col>
         <el-col :span="8">

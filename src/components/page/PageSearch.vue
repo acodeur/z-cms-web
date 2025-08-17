@@ -4,23 +4,19 @@
       <el-row v-bind="config.row">
         <template v-for="item in config.formItems" :key="item.prop">
           <el-col v-bind="config.col">
-            <el-form-item :label="item.label" :prop="item.prop" :rules="item.rules">
-              <template v-if="item.type === 'input'">
-                <el-input v-model="searchForm[item.prop]" :placeholder="item.placeholder" />
-              </template>
-              <template v-if="item.type === 'select'">
-                <el-select v-model="searchForm[item.prop]" :placeholder="item.placeholder">
-                  <el-option label="启用" value="1" />
-                  <el-option label="禁用" value="0" />
+            <el-form-item v-bind="item.attrs">
+              <template v-if="item.component.type === 'select'">
+                <el-select v-model="searchForm[item.component.model]" v-bind="item.component.attrs">
+                  <template v-for="option in item.component.attrs.options" :key="option.value">
+                    <el-option :label="option.label" :value="option.value" />
+                  </template>
                 </el-select>
               </template>
-              <template v-if="item.type === 'date-picker'">
-                <el-date-picker
-                  v-model="searchForm[item.prop]"
-                  type="daterange"
-                  range-separator="至"
-                  start-placeholder="开始日期"
-                  end-placeholder="结束日期"
+              <template v-else>
+                <component
+                  :is="getComponent()"
+                  v-model="searchForm[item.component.model]"
+                  v-bind="item.component.attrs"
                 />
               </template>
             </el-form-item>
@@ -32,7 +28,9 @@
 </template>
 
 <script setup lang="ts">
-import {reactive, ref} from 'vue'
+import { defineComponent, reactive, ref } from 'vue'
+import { ElForm, ElInput, ElSelect } from 'element-plus'
+
 interface IProps {
   config: {
     pageName: string
@@ -47,27 +45,28 @@ interface IProps {
       span: number
     }
     formItems: Array<{
-      type: string
-      label: string
-      placeholder?: string
-      prop: string
-      rules?: Array<any>
+      attrs: any
+      component: {
+        type: string
+        model: string
+        attrs: any
+      }
     }>
   }
 }
 
+interface ISearchForm {
+  [key: string]: any
+}
+
 const props = defineProps<IProps>()
 const { config } = props
-const searchForm = reactive({
-  username: '',
-  realname: '',
-  phone: '',
-  status: '1',
-  createTime: '',
-})
+const searchForm = reactive<ISearchForm>({})
 const searchFormRef = ref()
 
-
+const getComponent = () => {
+  return 'el-input'
+}
 </script>
 
 <style lang="less" scoped>
