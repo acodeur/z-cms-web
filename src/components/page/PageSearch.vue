@@ -14,7 +14,7 @@
               </template>
               <template v-else>
                 <component
-                  :is="getComponent()"
+                  :is="getComponent(item)"
                   v-model="searchForm[item.component.model]"
                   v-bind="item.component.attrs"
                 />
@@ -28,28 +28,29 @@
 </template>
 
 <script setup lang="ts">
-import { defineComponent, reactive, ref } from 'vue'
-import { ElForm, ElInput, ElSelect } from 'element-plus'
+import { reactive, ref } from 'vue'
+import { ElDatePicker, ElForm, ElInput, ElSelect } from 'element-plus'
 
 interface IProps {
   config: {
     pageName: string
     form: {
-      labelWidth: string
-      labelPosition: 'top' | 'left' | 'right'
+      labelWidth?: string
+      labelPosition?: 'top' | 'left' | 'right'
     }
     row: {
-      glutter: number
+      glutter?: number
     }
     col: {
-      span: number
+      span?: number
     }
     formItems: Array<{
-      attrs: any
+      attrs?: any
       component: {
         type: string
         model: string
-        attrs: any
+        attrs?: any
+        slot?: string
       }
     }>
   }
@@ -64,7 +65,19 @@ const { config } = props
 const searchForm = reactive<ISearchForm>({})
 const searchFormRef = ref()
 
-const getComponent = () => {
+const getComponent = (item: any) => {
+  switch (item.component.type) {
+    case 'select':
+      return ElSelect
+    case 'input':
+      return ElInput
+    case 'datepicker':
+      return ElDatePicker
+    case 'custom':
+      return item.component.slot
+    default:
+      return ElInput
+  }
   return 'el-input'
 }
 </script>
