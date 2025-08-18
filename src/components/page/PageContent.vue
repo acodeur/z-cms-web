@@ -102,8 +102,9 @@ const emit = defineEmits([
   'handlePageSizeChange',
 ])
 
-const pageSize = ref(props.config.pagination.pageSize)
-const currentPage = ref(props.config.pagination.currentPage)
+const { pagination } = props.config
+const pageSize = ref(pagination.pageSize)
+const currentPage = ref(pagination.currentPage)
 
 function handleAdd() {
   emit('handleAdd')
@@ -121,6 +122,17 @@ function handleCurrentPageChange(val: number) {
 function handlePageSizeChange(val: number) {
   emit('handlePageSizeChange', val)
 }
+
+function updatePagination(
+  pagination: { pageSize: number; currentPage: number } = { pageSize: 10, currentPage: 1 },
+) {
+  pageSize.value = pagination.pageSize
+  currentPage.value = pagination.currentPage
+}
+
+defineExpose({
+  updatePagination,
+})
 </script>
 
 <style lang="less" scoped>

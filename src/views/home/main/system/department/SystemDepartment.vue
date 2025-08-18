@@ -1,6 +1,7 @@
 <template>
   <div class="system-department">
     <page-search
+      ref="pageSearchRef"
       :config="config"
       :init-values="initValues"
       @handle-search="handleSearch"
@@ -8,6 +9,7 @@
     >
     </page-search>
     <page-content
+      ref="pageContentRef"
       :config="contentConfig"
       :data-list="dataList"
       :total-count="totalCount"
@@ -21,6 +23,7 @@
 </template>
 
 <script setup lang="ts">
+import { ref } from 'vue'
 import PageContent from '@/components/page/PageContent.vue'
 import contentConfig from './config/content.config'
 import searchConfig from './config/search.config'
@@ -31,8 +34,11 @@ import { ElMessage, ElMessageBox } from 'element-plus'
 const { config, initValues } = searchConfig
 const { pagination } = contentConfig
 const { pageSize: initPageSize, currentPage: initPageNum } = pagination
-const systemStore = useSystemStore()
+const pageSearchRef = ref()
+const pageContentRef = ref()
+
 //初始化值
+const systemStore = useSystemStore()
 const { dataList, totalCount } = storeToRefs(systemStore)
 const systemDepartmentSearchReq = {
   pageNum: initPageNum,
@@ -46,7 +52,12 @@ const handleSearch = (formData: Record<string, any> = {}) => {
     pageNum: initPageNum,
     pageSize: initPageSize,
   }
-  systemStore.getSystemData(contentConfig.pageName, systemSearchReq)
+  systemStore.getSystemData(contentConfig.pageName, systemSearchReq).then(() => {
+    pageContentRef.value.updatePagination({
+      pageSize: initPageSize,
+      currentPage: initPageNum,
+    })
+  })
 }
 
 const handleReset = () => {
@@ -93,8 +104,6 @@ function handlePageSizeChange(val: number) {
   }
   systemStore.getSystemData(contentConfig.pageName, systemDepartmentSearchReq)
 }
-
-
 </script>
 
 <style lang="less" scoped>
