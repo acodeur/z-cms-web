@@ -8,6 +8,6 @@ export {}
 declare global {
   const ElConfrim: (typeof import('element-plus/es'))['ElConfrim']
   const ElInput: (typeof import('element-plus/es'))['ElInput']
-  const ElMessage: (typeof import('element-plus/es'))['ElMessage']
+  const ElMessage: typeof import('element-plus/es')['ElMessage']
   const ElMessageBox: (typeof import('element-plus/es'))['ElMessageBox']
 }

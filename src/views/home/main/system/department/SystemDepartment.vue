@@ -19,6 +19,11 @@
       @handle-current-page-change="handleCurrentPageChange"
       @handle-page-size-change="handlePageSizeChange"
     ></page-content>
+    <page-dialog
+      ref="pageDialogRef"
+      :config="dialogConfig"
+      @handle-confirm="handleConfirm"
+    ></page-dialog>
   </div>
 </template>
 
@@ -27,6 +32,7 @@ import { ref } from 'vue'
 import PageContent from '@/components/page/PageContent.vue'
 import contentConfig from './config/content.config'
 import searchConfig from './config/search.config'
+import dialogConfig from './config/dialog.config'
 import useSystemStore from '@/stores/home/system/system'
 import { storeToRefs } from 'pinia'
 import { ElMessage, ElMessageBox } from 'element-plus'
@@ -36,6 +42,7 @@ const { pagination } = contentConfig
 const { pageSize: initPageSize, currentPage: initPageNum } = pagination
 const pageSearchRef = ref()
 const pageContentRef = ref()
+const pageDialogRef = ref()
 
 //初始化值
 const systemStore = useSystemStore()
@@ -46,6 +53,7 @@ const systemDepartmentSearchReq = {
 }
 systemStore.getSystemData(contentConfig.pageName, systemDepartmentSearchReq)
 
+// 搜索操作
 const handleSearch = (formData: Record<string, any> = {}) => {
   const systemSearchReq = {
     ...formData,
@@ -59,19 +67,23 @@ const handleSearch = (formData: Record<string, any> = {}) => {
     })
   })
 }
-
 const handleReset = () => {
   pagination.currentPage = initPageNum
   pagination.pageSize = initPageSize
   handleSearch()
 }
 
-// 响应CRUD
+// 内容操作
 function handleAdd() {
-  console.log('add')
+  const pageDialog = pageDialogRef.value
+  pageDialog.type = 'add'
+  pageDialog.visiable = true
 }
 function handleEdit(index: number, row: any) {
-  console.log('edit')
+  console.log(index, row)
+  const pageDialog = pageDialogRef.value
+  pageDialog.type = 'edit'
+  pageDialog.visiable = true
 }
 function handleDelete(index: number, row: any) {
   ElMessageBox.confirm('此操作将删除该用户, 是否继续?', '提示', {
@@ -88,6 +100,11 @@ function handleDelete(index: number, row: any) {
     })
   })
 }
+function handleConfirm(formData: Record<string, any>) {
+  console.log(formData)
+}
+
+// 分页操作
 function handleCurrentPageChange(val: number) {
   pagination.currentPage = val
   const systemDepartmentSearchReq = {
@@ -110,5 +127,17 @@ function handlePageSizeChange(val: number) {
 .system-department {
   background-color: #f0f0f0;
   border-radius: 8px;
+  .page-dialog {
+    padding: 5px;
+    background-color: #f0f0f0;
+    border-radius: 8px;
+
+    .el-input {
+      width: 70%;
+    }
+    .el-select {
+      width: 70%;
+    }
+  }
 }
 </style>
