@@ -17,19 +17,17 @@
       <user-content @handle-reload="handleReload"></user-content>
     </div>
     <div class="pagination">
-      <el-config-provider :locale="zhCn">
-        <el-pagination
-          background
-          layout="total, prev, pager, next, sizes"
-          :page-sizes="[5, 10, 20, 50]"
-          :total="user.totalCount"
-          v-model:page-size="pagination.pageSize"
-          v-model:current-page="pagination.currentPage"
-          :pager-count="7"
-          @current-change="handleCurrentChange"
-          @size-change="handleSizeChange"
-        ></el-pagination>
-      </el-config-provider>
+      <el-pagination
+        background
+        layout="total, prev, pager, next, sizes"
+        :page-sizes="[5, 10, 20, 50]"
+        :total="user.totalCount"
+        v-model:page-size="pagination.pageSize"
+        v-model:current-page="pagination.currentPage"
+        :pager-count="7"
+        @current-change="handleCurrentChange"
+        @size-change="handleSizeChange"
+      ></el-pagination>
     </div>
   </div>
   <user-dialog ref="userDialogRef" type="add" @handle-reload="handleReload"></user-dialog>
@@ -42,7 +40,6 @@ import UserContent from './cpns/UserContent.vue'
 import useSystemStore from '@/stores/home/system/system'
 import UserDialog from './cpns/UserDialog.vue'
 import { ref, reactive, onMounted } from 'vue'
-import zhCn from 'element-plus/es/locale/lang/zh-cn'
 
 const { user } = storeToRefs(useSystemStore())
 const pagination = reactive({

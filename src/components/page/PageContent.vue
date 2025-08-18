@@ -58,26 +58,23 @@
       </el-table>
     </div>
     <div class="pagination">
-      <el-config-provider :locale="zhCn">
-        <el-pagination
-          background
-          layout="total, prev, pager, next, sizes"
-          :page-sizes="[5, 10, 20, 50]"
-          :total="totalCount"
-          v-model:page-size="pageSize"
-          v-model:current-page="currentPage"
-          :pager-count="7"
-          @current-change="handleCurrentPageChange"
-          @size-change="handlePageSizeChange"
-        ></el-pagination>
-      </el-config-provider>
+      <el-pagination
+        background
+        layout="total, prev, pager, next, sizes"
+        :page-sizes="[5, 10, 20, 50]"
+        :total="totalCount"
+        v-model:page-size="pageSize"
+        v-model:current-page="currentPage"
+        :pager-count="7"
+        @current-change="handleCurrentPageChange"
+        @size-change="handlePageSizeChange"
+      ></el-pagination>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
 import { formatDate } from '@/utils/format'
-import zhCn from 'element-plus/es/locale/lang/zh-cn'
 import { ref } from 'vue'
 
 interface IProps {
@@ -135,7 +132,7 @@ function handlePageSizeChange(val: number) {
     display: flex;
     justify-content: space-between;
     align-items: flex-end;
-    padding: 5px;
+    padding: 5px 0;
 
     .add-btn {
       width: 80px;
