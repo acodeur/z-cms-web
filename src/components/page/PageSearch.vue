@@ -16,14 +16,9 @@
 
 <script setup lang="ts">
 import { computed, ref } from 'vue'
-import type { IForm } from '../form/type'
+import type { IPageSearchProps } from './type'
 
-interface IProps {
-  config: IForm
-  initValues?: Record<string, any>
-}
-
-const props = defineProps<IProps>()
+const props = defineProps<IPageSearchProps>()
 const emits = defineEmits(['handleReset', 'handleSearch'])
 
 const formRef = ref()

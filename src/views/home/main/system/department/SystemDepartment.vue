@@ -11,8 +11,7 @@
     <page-content
       ref="pageContentRef"
       :config="contentConfig"
-      :data-list="dataList"
-      :total-count="totalCount"
+      :model="contentModel"
       @handle-add="handleAdd"
       @handle-edit="handleEdit"
       @handle-delete="handleDelete"
@@ -28,7 +27,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue'
+import { reactive, ref } from 'vue'
 import PageContent from '@/components/page/PageContent.vue'
 import contentConfig from './config/content.config'
 import searchConfig from './config/search.config'
@@ -47,6 +46,10 @@ const pageDialogRef = ref()
 //初始化值
 const systemStore = useSystemStore()
 const { dataList, totalCount } = storeToRefs(systemStore)
+const contentModel = reactive({
+  dataList,
+  totalCount,
+})
 const systemDepartmentSearchReq = {
   pageNum: initPageNum,
   pageSize: initPageSize,

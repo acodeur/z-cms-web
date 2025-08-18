@@ -75,25 +75,10 @@
 
 <script setup lang="ts">
 import { formatDate } from '@/utils/format'
-import { ref } from 'vue'
+import { ref, computed } from 'vue'
+import type { IPageContentProps } from './type'
 
-interface IProps {
-  config: {
-    header: {
-      title: string
-      btnTxt: string
-    }
-    propsList: any[]
-    pagination: {
-      currentPage: number
-      pageSize: number
-    }
-  }
-  dataList: any[]
-  totalCount: number
-}
-
-const props = defineProps<IProps>()
+const props = defineProps<IPageContentProps>()
 const emit = defineEmits([
   'handleAdd',
   'handleEdit',
@@ -105,6 +90,8 @@ const emit = defineEmits([
 const { pagination } = props.config
 const pageSize = ref(pagination.pageSize)
 const currentPage = ref(pagination.currentPage)
+const dataList = computed(() => props.model.dataList)
+const totalCount = computed(() => props.model.totalCount)
 
 function handleAdd() {
   emit('handleAdd')

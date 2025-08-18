@@ -25,19 +25,11 @@
 <script setup lang="ts">
 import { ref, computed } from 'vue'
 import type { IForm } from '../form/type'
+import type { IPageDialogProps, DialogType } from './type'
 
-type DialogType = 'add' | 'edit'
-interface IProps {
-  config: {
-    header: { addTitle: string; editTitle: string }
-    dialogProps: Record<string, any>
-    footer: { cancelTxt?: string; addConfirmTxt?: string; editConfirmTxt?: string }
-    formConfig: { ui: IForm; initValues?: Record<string, any> }
-  }
-}
 const emits = defineEmits(['handleConfirm'])
 
-const props = defineProps<IProps>()
+const props = defineProps<IPageDialogProps>()
 const { header, dialogProps, footer, formConfig } = props.config
 const { addTitle, editTitle } = header
 const { cancelTxt, addConfirmTxt, editConfirmTxt } = footer
