@@ -125,20 +125,21 @@ function handlePageSizeChange(val: number) {
 
 <style lang="less" scoped>
 .page-content {
-  padding: 5px;
+  padding: 10px;
   background-color: #f0f0f0;
   border-radius: 8px;
   .header {
     display: flex;
     justify-content: space-between;
     align-items: flex-end;
-    padding: 5px 0;
 
     .add-btn {
       width: 80px;
     }
   }
-
+  .table {
+    margin-top: 10px;
+  }
   .pagination {
     display: flex;
     justify-content: center;

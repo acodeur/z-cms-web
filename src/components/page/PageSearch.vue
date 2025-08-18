@@ -1,7 +1,7 @@
 <template>
   <div class="page-search">
     <div class="search-form">
-      <dynamic-form ref="formRef" :i-form="config" :init-model="initValues" v-model="formModel">
+      <dynamic-form ref="formRef" :i-form="config" :init-model="initValues">
         <template v-for="item in slotItems" :key="item.slot" v-slot:[item.slot]="{ model }">
           <slot :name="item.slot" :model="{ model }"></slot>
         </template>
@@ -27,12 +27,10 @@ const props = defineProps<IProps>()
 const emits = defineEmits(['handleReset', 'handleSearch'])
 
 const formRef = ref()
-const formModel = ref<Record<string, any>>({})
 const slotItems = computed(() => props.config.formItems.filter((item) => item.slot))
 
 const handleReset = () => {
   formRef.value?.resetFields()
-  handleSearch()
   emits('handleReset')
 }
 
@@ -40,8 +38,8 @@ const handleSearch = () => {
   formRef.value
     ?.validate()
     .then(() => {
-      console.log('✅ 提交数据：', formModel.value)
-      emits('handleSearch', formModel.value)
+      console.log('✅ 提交数据：', formRef.value.formModel)
+      emits('handleSearch', formRef.value.formModel)
     })
     .catch(() => {
       console.log('❌ 表单校验失败')
@@ -51,7 +49,7 @@ const handleSearch = () => {
 
 <style lang="less" scoped>
 .page-search {
-  padding: 5px;
+  padding: 10px;
   background-color: #f0f0f0;
   border-radius: 8px;
 

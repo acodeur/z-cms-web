@@ -1,4 +1,4 @@
-<template>
+ <template>
   <el-form ref="elFormRef" :model="formModel" :rules="formRules" v-bind="props.iForm.formProps">
     <el-row v-bind="props.iForm.rowProps || { gutter: 200 }">
       <el-col
@@ -45,7 +45,6 @@ const props = defineProps<{
 const elFormRef = ref<InstanceType<typeof ElForm>>()
 const formModel = reactive<Record<string, any>>({})
 const formRules = reactive<Record<string, any>>({})
-
 /** 初始化表单数据与校验规则 */
 const initForm = () => {
   props.iForm.formItems.forEach((item: IFormItem) => {

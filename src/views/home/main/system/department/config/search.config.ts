@@ -32,30 +32,6 @@ const searchConfig: { config: IForm; initValues: Record<string, any> } = {
           endPlaceholder: '结束日期',
         },
       },
-      {
-        field: 'avatar',
-        label: '头像',
-        component: 'custom',
-        slot: 'avatarUpload',
-      },
-      {
-        field: 'gender',
-        label: '性别',
-        component: 'select',
-        componentProps: {
-          placeholder: '请选择性别',
-        },
-        options: [
-          { label: '男', value: 'male' },
-          { label: '女', value: 'female' },
-        ],
-      },
-      {
-        field: 'switch',
-        label: '切换',
-        component: 'custom',
-        slot: 'switch',
-      },
     ],
   },
   initValues: {},
