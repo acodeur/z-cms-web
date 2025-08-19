@@ -1,6 +1,6 @@
-import type { IForm } from '@/components/form/type'
+import type { IPageSearchProps } from '@/components/page/type'
 
-const searchConfig: { config: IForm; initValues: Record<string, any> } = {
+const searchConfig: IPageSearchProps = {
   config: {
     formProps: {
       labelWidth: '100px',
@@ -34,7 +34,7 @@ const searchConfig: { config: IForm; initValues: Record<string, any> } = {
       },
     ],
   },
-  initValues: {},
+  model: {},
 }
 
 export default searchConfig

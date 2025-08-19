@@ -1,9 +1,9 @@
 <template>
   <div class="page-search">
     <div class="search-form">
-      <dynamic-form ref="formRef" :i-form="config" :init-model="initValues">
-        <template v-for="item in slotItems" :key="item.slot" v-slot:[item.slot]="{ model }">
-          <slot :name="item.slot" :model="{ model }"></slot>
+      <dynamic-form ref="formRef" :i-form="config" :init-model="model">
+        <template v-for="item in slotItems" :key="item" v-slot:[item]="{ formItem, formData }">
+          <slot :name="item" :form-item="formItem" :form-data="formData"></slot>
         </template>
       </dynamic-form>
     </div>
@@ -22,7 +22,10 @@ const props = defineProps<IPageSearchProps>()
 const emits = defineEmits(['handleReset', 'handleSearch'])
 
 const formRef = ref()
-const slotItems = computed(() => props.config.formItems.filter((item) => item.slot))
+const slotItems = computed(() => {
+  const slots = props.config.formItems.filter((item) => item.slot).map((item) => item.slot)
+  return [...new Set(slots)]
+})
 
 const handleReset = () => {
   formRef.value?.resetFields()

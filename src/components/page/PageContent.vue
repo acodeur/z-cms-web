@@ -12,7 +12,7 @@
       <el-table :data="dataList" stripe>
         <template v-for="item in config.propsList" :key="item.prop">
           <!-- 时间列 -->
-          <template v-if="item.type === 'timer'">
+          <template v-if="item.type === 'datetime'">
             <el-table-column v-bind="item">
               <template #default="scope">
                 {{ formatDate(scope.row[item.prop]) }}
@@ -75,7 +75,7 @@
 
 <script setup lang="ts">
 import { formatDate } from '@/utils/format'
-import { ref, computed } from 'vue'
+import { ref, toRefs } from 'vue'
 import type { IPageContentProps } from './type'
 
 const props = defineProps<IPageContentProps>()
@@ -90,8 +90,7 @@ const emit = defineEmits([
 const { pagination } = props.config
 const pageSize = ref(pagination.pageSize)
 const currentPage = ref(pagination.currentPage)
-const dataList = computed(() => props.model.dataList)
-const totalCount = computed(() => props.model.totalCount)
+const {dataList, totalCount} = toRefs(props.model)
 
 function handleAdd() {
   emit('handleAdd')

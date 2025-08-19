@@ -1,6 +1,6 @@
-import { colProps } from 'element-plus'
+import type { IPageDialogConfig } from '@/components/page/type'
 
-const dialogConfig: any = {
+const dialogConfig: IPageDialogConfig = {
   header: {
     addTitle: '新建部门',
     editTitle: '编辑部门',
@@ -36,9 +36,41 @@ const dialogConfig: any = {
           componentProps: { placeholder: '请输入部门领导名称' },
           rules: [{ min: 0, max: 20, message: '长度最大20位', trigger: 'blur' }],
         },
+        {
+          field: 'parentId',
+          label: '上级部门',
+          colProps: { span: 21 },
+          component: 'input',
+          componentProps: { placeholder: '请输入上级部门名称' },
+          rules: [{ min: 0, max: 20, message: '长度最大20位', trigger: 'blur' }],
+        },
+        {
+          belong: 'edit',
+          field: 'createAt',
+          label: '创建时间',
+          colProps: { span: 21 },
+          component: 'custom',
+          componentProps: {
+            disabled: true,
+            style: { width: '100%' },
+          },
+          slot: 'datetime',
+        },
+        {
+          belong: 'edit',
+          field: 'updateAt',
+          label: '更新时间',
+          colProps: { span: 21 },
+          component: 'custom',
+          componentProps: {
+            disabled: true,
+            style: { width: '100%' },
+          },
+          slot: 'datetime',
+        },
       ],
     },
-    initValues: {},
+    model: {},
   },
 }
 

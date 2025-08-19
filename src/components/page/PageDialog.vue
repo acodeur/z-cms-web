@@ -5,9 +5,13 @@
       :title="type === 'add' ? addTitle : editTitle"
       v-bind="dialogProps"
     >
-      <dynamic-form ref="formRef" :i-form="formConfig.ui" :init-model="formConfig.initValues ?? {}">
-        <template v-for="item in slotItems" :key="item.slot" v-slot:[item.slot]="{ model }">
-          <slot :name="item.slot" :model="{ model }"></slot>
+      <dynamic-form
+        ref="formRef"
+        :i-form="dialogFormConfig.ui"
+        :init-model="dialogFormConfig.model ?? {}"
+      >
+        <template v-for="item in slotItems" :key="item" v-slot:[item]="{ formItem, formData }">
+          <slot :name="item" :form-item="formItem" :form-data="formData"></slot>
         </template>
       </dynamic-form>
       <template #footer>
@@ -23,29 +27,38 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed } from 'vue'
-import type { IForm } from '../form/type'
+import { ref, computed, toRefs } from 'vue'
 import type { IPageDialogProps, DialogType } from './type'
 
 const emits = defineEmits(['handleConfirm'])
-
 const props = defineProps<IPageDialogProps>()
-const { header, dialogProps, footer, formConfig } = props.config
-const { addTitle, editTitle } = header
-const { cancelTxt, addConfirmTxt, editConfirmTxt } = footer
-const slotItems = computed(() => formConfig.ui.formItems.filter((item) => item.slot))
+const { header, dialogProps, footer, formConfig } = toRefs(props.config)
+const { addTitle, editTitle } = header.value
+const { cancelTxt, addConfirmTxt, editConfirmTxt } = footer.value
 const visiable = ref(false)
-const type = ref<DialogType>('add')
+const type = ref<DialogType>()
 const formRef = ref()
+const dialogFormConfig = computed(() => {
+  formConfig.value.ui.formItems
+    .filter((item) => item.belong)
+    .forEach((item) => {
+      item.hidden = item.belong !== type.value
+    })
+  return formConfig.value
+})
+const slotItems = computed(() => {
+  const slots = formConfig.value.ui.formItems.filter((item) => item.slot).map((item) => item.slot)
+  return [...new Set(slots)]
+})
 
 function handleConfirm() {
   formRef.value
     .validate()
     .then(() => {
-      emits('handleConfirm', formRef.value.formModel)
+      emits('handleConfirm', formRef.value.formModel, type.value)
     })
-    .catch(() => {
-      ElMessage.error('请填写正确的表单信息')
+    .catch((err) => {
+      ElMessage.error(err.message)
     })
 }
 

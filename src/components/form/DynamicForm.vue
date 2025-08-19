@@ -1,33 +1,31 @@
- <template>
-  <el-form ref="elFormRef" :model="formModel" :rules="formRules" v-bind="props.iForm.formProps">
-    <el-row v-bind="props.iForm.rowProps || { gutter: 200 }">
-      <el-col
-        v-for="item in props.iForm.formItems"
-        :key="item.field"
-        v-bind="item.colProps || { span: 8 }"
-      >
-        <el-form-item :label="item.label" :prop="item.field">
-          <!-- slot优先 -->
-          <slot v-if="item.slot" :name="item.slot" :model="formModel"></slot>
-          <!-- 渲染内置组件 -->
-          <component
-            v-else
-            :is="getComponent(item)"
-            v-model="formModel[item.field]"
-            v-bind="item.componentProps"
-          >
-            <!-- 处理Select选项 -->
-            <template v-if="item.component === 'select'">
-              <el-option
-                v-for="op in item.options"
-                :key="op.value"
-                :label="op.label"
-                :value="op.value"
-              />
-            </template>
-          </component>
-        </el-form-item>
-      </el-col>
+<template>
+  <el-form ref="elFormRef" :model="formModel" :rules="formRules" v-bind="iForm.formProps">
+    <el-row v-bind="iForm.rowProps || { gutter: 200 }">
+      <template v-for="item in iForm.formItems" :key="item.field">
+        <el-col v-if="!item.hidden" v-bind="item.colProps || { span: 8 }">
+          <el-form-item :label="item.label" :prop="item.field">
+            <!-- slot优先 -->
+            <slot v-if="item.slot" :name="item.slot" :form-item="item" :form-data="formModel"></slot>
+            <!-- 渲染内置组件 -->
+            <component
+              v-else
+              :is="getComponent(item)"
+              v-model="formModel[item.field]"
+              v-bind="item.componentProps"
+            >
+              <!-- 处理Select选项 -->
+              <template v-if="item.component === 'select'">
+                <el-option
+                  v-for="op in item.options"
+                  :key="op.value"
+                  :label="op.label"
+                  :value="op.value"
+                />
+              </template>
+            </component>
+          </el-form-item>
+        </el-col>
+      </template>
     </el-row>
   </el-form>
 </template>
@@ -58,7 +56,7 @@ const initForm = () => {
     }
   })
 }
-watch(() => props.iForm.formItems, initForm, {
+watch(() => [props.iForm.formItems, props.initModel], initForm, {
   immediate: true,
 })
 

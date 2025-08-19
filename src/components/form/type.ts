@@ -13,6 +13,7 @@ export interface IFormItem {
   required?: boolean // 是否必填
   rules?: any[] // 校验规则
   slot?: string // 自定义slot名称
+  hidden?: boolean // 是否隐藏
 }
 
 export type ComponentType = 'input' | 'select' | 'datepicker' | 'custom'
