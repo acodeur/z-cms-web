@@ -9,8 +9,8 @@
       </div>
     </div>
     <div class="table">
-      <el-table :data="dataList" stripe>
-        <template v-for="item in config.propsList" :key="item.prop">
+      <el-table :data="dataList" v-bind="config.tableProps">
+        <template v-for="item in config.columnList" :key="item.prop">
           <!-- 时间列 -->
           <el-table-column v-if="item.type === 'datetime'" v-bind="item">
             <template #default="scope">

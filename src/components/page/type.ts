@@ -7,7 +7,8 @@ interface IPageContentConfig {
     title: string
     btnTxt: string
   }
-  propsList: Record<string, any>[]
+  tableProps?: Record<string, any>
+  columnList: Record<string, any>[]
   pagination: {
     currentPage: number
     pageSize: number

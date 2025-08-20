@@ -6,7 +6,7 @@ const contentConfig: IPageContentConfig = {
     title: '部门列表',
     btnTxt: '新建部门',
   },
-  propsList: [
+  columnList: [
     { type: 'index', label: '序号', width: '80px', align: 'center' },
     { type: 'normal', label: '部门名称', prop: 'name', width: '150px', align: 'center' },
     { type: 'normal', label: '部门领导', prop: 'leader', width: '150px', align: 'center' },

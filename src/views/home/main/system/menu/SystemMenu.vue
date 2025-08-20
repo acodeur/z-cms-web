@@ -19,7 +19,7 @@
       @handle-page-size-change="handlePageSizeChange"
     >
       <template #selectOption="{ row }">
-        {{ menuLevelOptions.find((item) => item.value === row.type)?.label || '未知' }}
+        {{ menuLevelOptions.find((item) => item.value === row.type)?.label || '' }}
       </template>
     </page-content>
     <page-dialog ref="pageDialogRef" :config="dialogConfigRef" @handle-confirm="handleConfirm">
@@ -189,6 +189,32 @@ systemStore.$onAction(({ name, args, after, onError }) => {
     padding: 5px;
     background-color: #f0f0f0;
     border-radius: 8px;
+  }
+  /* 为不同层级设置不同的缩进（3级，前2列缩进） */
+  :deep(.el-table__row--level-0 .el-table__cell:nth-child(1) .cell) {
+    padding-left: 20px;
+    padding-right: 0px;
+  }
+  :deep(.el-table__row--level-1 .el-table__cell:nth-child(1) .cell) {
+    padding-left: 30px;
+    padding-right: 0px;
+  }
+  :deep(.el-table__row--level-2 .el-table__cell:nth-child(1) .cell) {
+    padding-left: 40px;
+    padding-right: 0px;
+  }
+  :deep(.el-table__row--level-0 .el-table__cell:nth-child(2) .cell) {
+    padding-left: 0px;
+  }
+  :deep(.el-table__row--level-1 .el-table__cell:nth-child(2) .cell) {
+    padding-left: 15px;
+  }
+  :deep(.el-table__row--level-2 .el-table__cell:nth-child(2) .cell) {
+    padding-left: 30px;
+  }
+  //header
+  :deep(.el-table__header .el-table__cell:nth-child(2) .cell) {
+    padding-left: 0px;
   }
 }
 </style>
