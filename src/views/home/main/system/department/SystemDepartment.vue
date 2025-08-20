@@ -121,11 +121,16 @@ function handleDelete(index: number, row: any) {
 }
 function handleConfirm(formData: Record<string, any>, type: DialogType) {
   if (type === 'add') {
+    const dateTime = new Date()
+    formData.createAt = formatDate(dateTime)
+    formData.updateAt = formatDate(dateTime)
     systemStore.addSystemData(contentConfig.pageName, formData).then(() => {
       pageDialogRef.value.visiable = false
     })
   }
   if (type === 'edit') {
+    const dateTime = new Date()
+    formData.updateAt = formatDate(dateTime)
     systemStore.editSystemData(contentConfig.pageName, formData).then(() => {
       pageDialogRef.value.visiable = false
     })
@@ -153,20 +158,22 @@ function handlePageSizeChange(val: number) {
 }
 
 // action订阅器
+const modifyOptions = ['addSystemData', 'editSystemData', 'deleteSystemData']
 systemStore.$onAction(({ name, args, after, onError }) => {
+  if (modifyOptions.includes(name) && args[0] === contentConfig.pageName) {
+    console.log('✅ 提交数据：', args[1])
+  }
+
   after((resolvedValue) => {
     if (name === 'getSystemData' && args[0] === contentConfig.pageName) {
       currentSystemSearchReq = { ...args[1] }
     }
-    if (
-      (name === 'addSystemData' || name === 'editSystemData' || name === 'deleteSystemData') &&
-      args[0] === contentConfig.pageName
-    ) {
+    if (modifyOptions.includes(name) && args[0] === contentConfig.pageName) {
       const { pageNum, pageSize, ...formData } = currentSystemSearchReq
       handleSearch(formData, pageNum, pageSize)
     }
   })
-})
+}, true)
 </script>
 
 <style lang="less" scoped>
