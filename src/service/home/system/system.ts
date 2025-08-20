@@ -44,3 +44,17 @@ export function deleteSystemDataApi(apiKey: string, id: string): Promise<any> {
     url: url,
   })
 }
+
+export function addSystemDataApi(apiKey: string, data: any): Promise<any> {
+  return zRequest.post({
+    url: apiMap[apiKey].add.url,
+    data,
+  })
+}
+
+export function editSystemDataApi(apiKey: string, data: any): Promise<any> {
+  return zRequest.patch({
+    url: apiMap[apiKey].edit.url.format({ id: data.id }),
+    data,
+  })
+}

@@ -5,6 +5,8 @@ import {
   editSystemUserApi,
   getSystemDataApi,
   deleteSystemDataApi,
+  addSystemDataApi,
+  editSystemDataApi,
 } from '@/service/home/system/system'
 import type { ISystemUserReq, ISystemUser } from '@/service/type'
 import type { ISystemUserSearchReq } from '@/types'
@@ -112,6 +114,10 @@ const useSystemStore = defineStore('system', {
     },
 
     async addSystemData(pageName: string, data: any) {
+      const dateTime = new Date()
+      data.createAt = formatDate(dateTime)
+      data.updateAt = formatDate(dateTime)
+      console.log('✅ 提交数据：', data)
       const res = await addSystemDataApi(pageName, data)
       if (res.code !== 0) {
         throw new Error(res.message)
@@ -119,6 +125,8 @@ const useSystemStore = defineStore('system', {
     },
 
     async editSystemData(pageName: string, data: any) {
+      data.updateAt = formatDate(new Date())
+      console.log('✅ 提交数据：', data)
       const res = await editSystemDataApi(pageName, data)
       if (res.code !== 0) {
         throw new Error(res.message)

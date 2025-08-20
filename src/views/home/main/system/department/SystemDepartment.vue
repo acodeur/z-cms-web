@@ -120,7 +120,6 @@ function handleDelete(index: number, row: any) {
   })
 }
 function handleConfirm(formData: Record<string, any>, type: DialogType) {
-  console.log(formData)
   if (type === 'add') {
     systemStore.addSystemData(contentConfig.pageName, formData).then(() => {
       pageDialogRef.value.visiable = false
@@ -157,14 +156,12 @@ function handlePageSizeChange(val: number) {
 systemStore.$onAction(({ name, args, after, onError }) => {
   after((resolvedValue) => {
     if (name === 'getSystemData' && args[0] === contentConfig.pageName) {
-      console.log('getSystemData ===>', resolvedValue)
       currentSystemSearchReq = { ...args[1] }
     }
     if (
       (name === 'addSystemData' || name === 'editSystemData' || name === 'deleteSystemData') &&
       args[0] === contentConfig.pageName
     ) {
-      console.log('add/edit/deleteSystemData ===>', resolvedValue)
       const { pageNum, pageSize, ...formData } = currentSystemSearchReq
       handleSearch(formData, pageNum, pageSize)
     }

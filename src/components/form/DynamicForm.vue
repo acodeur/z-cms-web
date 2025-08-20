@@ -1,8 +1,8 @@
 <template>
   <el-form ref="elFormRef" :model="formModel" :rules="formRules" v-bind="iForm.formProps">
-    <el-row v-bind="iForm.rowProps || { gutter: 200 }">
+    <el-row v-bind="iForm.rowProps ?? { gutter: 200 }">
       <template v-for="item in iForm.formItems" :key="item.field">
-        <el-col v-if="!item.hidden" v-bind="item.colProps || { span: 8 }">
+        <el-col v-if="!item.hidden" v-bind="item.colProps ?? { span: 8 }">
           <el-form-item :label="item.label" :prop="item.field">
             <!-- slot优先 -->
             <slot

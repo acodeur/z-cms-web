@@ -75,6 +75,13 @@ const dialogConfig: IPageDialogConfig = {
           },
           slot: 'datetime',
         },
+        {
+          belong: 'edit',
+          field: 'id',
+          label: 'id',
+          colProps: { span: 21, style: { display: 'none' } },
+          component: 'input',
+        },
       ],
     },
     model: {},
