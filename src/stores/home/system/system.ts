@@ -110,6 +110,20 @@ const useSystemStore = defineStore('system', {
         throw new Error(res.message)
       }
     },
+
+    async addSystemData(pageName: string, data: any) {
+      const res = await addSystemDataApi(pageName, data)
+      if (res.code !== 0) {
+        throw new Error(res.message)
+      }
+    },
+
+    async editSystemData(pageName: string, data: any) {
+      const res = await editSystemDataApi(pageName, data)
+      if (res.code !== 0) {
+        throw new Error(res.message)
+      }
+    },
   },
 })
 

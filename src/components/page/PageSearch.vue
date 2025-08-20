@@ -36,11 +36,10 @@ const handleSearch = () => {
   formRef.value
     ?.validate()
     .then(() => {
-      console.log('✅ 提交数据：', formRef.value.formModel)
       emits('handleSearch', formRef.value.formModel)
     })
     .catch(() => {
-      console.log('❌ 表单校验失败')
+      console.log('❌ 检索表单校验失败：', formRef.value.formModel)
     })
 }
 </script>

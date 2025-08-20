@@ -12,7 +12,7 @@ const searchConfig: IPageSearchProps = {
         label: '部门名称',
         component: 'input',
         componentProps: { placeholder: '请输入查询的部门名称' },
-        rules: [{ min: 0, max: 50, message: '长度最大50位', trigger: 'blur' }],
+        rules: [{ min: 0, max: 20, message: '长度最大20位', trigger: 'blur' }],
       },
       {
         field: 'leader',

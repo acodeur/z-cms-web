@@ -45,6 +45,8 @@ const pageSearchRef = ref()
 const pageContentRef = ref()
 const pageDialogRef = ref()
 
+let currentSystemSearchReq: Record<string, any> = {}
+
 //初始化值
 const systemStore = useSystemStore()
 const { dataList, totalCount } = storeToRefs(systemStore)
@@ -52,23 +54,27 @@ const contentModel = reactive({
   dataList,
   totalCount,
 })
-const systemDepartmentSearchReq = {
+const systemSearchReq = {
   pageNum: initPageNum,
   pageSize: initPageSize,
 }
-systemStore.getSystemData(contentConfig.pageName, systemDepartmentSearchReq)
+systemStore.getSystemData(contentConfig.pageName, systemSearchReq)
 
 // 搜索操作
-const handleSearch = (formData: Record<string, any> = {}) => {
+const handleSearch = (
+  formData: Record<string, any> = {},
+  _pageNum: number = initPageNum,
+  _pageSize: number = initPageSize,
+) => {
   const systemSearchReq = {
     ...formData,
-    pageNum: initPageNum,
-    pageSize: initPageSize,
+    pageNum: _pageNum ?? initPageNum,
+    pageSize: _pageSize ?? initPageSize,
   }
   systemStore.getSystemData(contentConfig.pageName, systemSearchReq).then(() => {
     pageContentRef.value.updatePagination({
-      pageSize: initPageSize,
-      currentPage: initPageNum,
+      pageSize: _pageSize ?? initPageSize,
+      currentPage: _pageNum ?? initPageNum,
     })
   })
 }
@@ -80,16 +86,18 @@ const handleReset = () => {
 
 // 内容操作
 function handleAdd() {
-  dialogConfigRef.formConfig.model = {}
   const pageDialog = pageDialogRef.value
+  pageDialog.formRef?.resetFields()
+  dialogConfigRef.formConfig.model = {}
   pageDialog.type = 'add'
   pageDialog.visiable = true
 }
 function handleEdit(index: number, row: any) {
+  const pageDialog = pageDialogRef.value
+  pageDialog.formRef?.resetFields()
   row.createAt = formatDate(row.createAt)
   row.updateAt = formatDate(row.updateAt)
   dialogConfigRef.formConfig.model = { ...row }
-  const pageDialog = pageDialogRef.value
   pageDialog.type = 'edit'
   pageDialog.visiable = true
 }
@@ -101,7 +109,10 @@ function handleDelete(index: number, row: any) {
     draggable: true,
   }).then(() => {
     // 删除
-    systemStore.deleteSystemData(contentConfig.pageName, row.id)
+    systemStore.deleteSystemData(contentConfig.pageName, row.id).then(() => {
+      const { pageNum, pageSize, ...formData } = currentSystemSearchReq
+      handleSearch(formData, pageNum, pageSize)
+    })
     ElMessage({
       type: 'success',
       message: '删除成功!',
@@ -111,10 +122,14 @@ function handleDelete(index: number, row: any) {
 function handleConfirm(formData: Record<string, any>, type: DialogType) {
   console.log(formData)
   if (type === 'add') {
-    systemStore.addSystemData(contentConfig.pageName, formData)
+    systemStore.addSystemData(contentConfig.pageName, formData).then(() => {
+      pageDialogRef.value.visiable = false
+    })
   }
   if (type === 'edit') {
-    systemStore.updateSystemData(contentConfig.pageName, formData)
+    systemStore.editSystemData(contentConfig.pageName, formData).then(() => {
+      pageDialogRef.value.visiable = false
+    })
   }
 }
 
@@ -122,6 +137,7 @@ function handleConfirm(formData: Record<string, any>, type: DialogType) {
 function handleCurrentPageChange(val: number) {
   pagination.currentPage = val
   const systemDepartmentSearchReq = {
+    formData: currentSystemSearchReq.formData ?? {},
     pageNum: val,
     pageSize: pagination.pageSize,
   }
@@ -130,11 +146,30 @@ function handleCurrentPageChange(val: number) {
 function handlePageSizeChange(val: number) {
   pagination.pageSize = val
   const systemDepartmentSearchReq = {
+    formData: currentSystemSearchReq.formData ?? {},
     pageNum: pagination.currentPage,
     pageSize: val,
   }
   systemStore.getSystemData(contentConfig.pageName, systemDepartmentSearchReq)
 }
+
+// action订阅器
+systemStore.$onAction(({ name, args, after, onError }) => {
+  after((resolvedValue) => {
+    if (name === 'getSystemData' && args[0] === contentConfig.pageName) {
+      console.log('getSystemData ===>', resolvedValue)
+      currentSystemSearchReq = { ...args[1] }
+    }
+    if (
+      (name === 'addSystemData' || name === 'editSystemData' || name === 'deleteSystemData') &&
+      args[0] === contentConfig.pageName
+    ) {
+      console.log('add/edit/deleteSystemData ===>', resolvedValue)
+      const { pageNum, pageSize, ...formData } = currentSystemSearchReq
+      handleSearch(formData, pageNum, pageSize)
+    }
+  })
+})
 </script>
 
 <style lang="less" scoped>
@@ -146,12 +181,12 @@ function handlePageSizeChange(val: number) {
     background-color: #f0f0f0;
     border-radius: 8px;
 
-    .el-input {
-      width: 70%;
-    }
-    .el-select {
-      width: 70%;
-    }
+    // .el-input {
+    //   width: 70%;
+    // }
+    // .el-select {
+    //   width: 70%;
+    // }
   }
 }
 </style>

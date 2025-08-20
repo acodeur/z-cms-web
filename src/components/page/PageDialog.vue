@@ -52,14 +52,13 @@ const slotItems = computed(() => {
 })
 
 function handleConfirm() {
-  formRef.value
-    .validate()
-    .then(() => {
+  formRef.value.validate((valid: boolean) => {
+    if (!valid) {
+      ElMessage.error('请填写正确的表单信息')
+    } else {
       emits('handleConfirm', formRef.value.formModel, type.value)
-    })
-    .catch((err) => {
-      ElMessage.error(err.message)
-    })
+    }
+  })
 }
 
 defineExpose({ visiable, type, formRef })

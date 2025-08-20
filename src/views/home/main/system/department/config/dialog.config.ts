@@ -26,7 +26,10 @@ const dialogConfig: IPageDialogConfig = {
           colProps: { span: 21 },
           component: 'input',
           componentProps: { placeholder: '请输入部门名称' },
-          rules: [{ min: 0, max: 50, message: '长度最大50位', trigger: 'blur' }],
+          rules: [
+            { required: true, message: '请输入部门名称', trigger: 'blur' },
+            { min: 1, max: 50, message: '长度最大50位', trigger: 'change' },
+          ],
         },
         {
           field: 'leader',
@@ -34,7 +37,10 @@ const dialogConfig: IPageDialogConfig = {
           colProps: { span: 21 },
           component: 'input',
           componentProps: { placeholder: '请输入部门领导名称' },
-          rules: [{ min: 0, max: 20, message: '长度最大20位', trigger: 'blur' }],
+          rules: [
+            { required: true, message: '请输入部门领导名称', trigger: 'blur' },
+            { min: 1, max: 20, message: '长度最大20位', trigger: 'change' },
+          ],
         },
         {
           field: 'parentId',
@@ -42,7 +48,10 @@ const dialogConfig: IPageDialogConfig = {
           colProps: { span: 21 },
           component: 'input',
           componentProps: { placeholder: '请输入上级部门名称' },
-          rules: [{ min: 0, max: 20, message: '长度最大20位', trigger: 'blur' }],
+          rules: [
+            { required: true, message: '请输入上级部门名称', trigger: 'blur' },
+            { validator: parentIdValidator, message: '长度最大50位', trigger: 'change' },
+          ],
         },
         {
           belong: 'edit',
@@ -52,7 +61,6 @@ const dialogConfig: IPageDialogConfig = {
           component: 'custom',
           componentProps: {
             disabled: true,
-            style: { width: '100%' },
           },
           slot: 'datetime',
         },
@@ -64,7 +72,6 @@ const dialogConfig: IPageDialogConfig = {
           component: 'custom',
           componentProps: {
             disabled: true,
-            style: { width: '100%' },
           },
           slot: 'datetime',
         },
@@ -72,6 +79,14 @@ const dialogConfig: IPageDialogConfig = {
     },
     model: {},
   },
+}
+
+function parentIdValidator(rule: any, value: any, callback: any) {
+  if (typeof value === 'number') {
+    value = value + ''
+  }
+  value = value.trim()
+  return value.length >= 1 && value.length <= 50
 }
 
 export default dialogConfig

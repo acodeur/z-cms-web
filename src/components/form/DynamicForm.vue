@@ -5,7 +5,12 @@
         <el-col v-if="!item.hidden" v-bind="item.colProps || { span: 8 }">
           <el-form-item :label="item.label" :prop="item.field">
             <!-- slot优先 -->
-            <slot v-if="item.slot" :name="item.slot" :form-item="item" :form-data="formModel"></slot>
+            <slot
+              v-if="item.slot"
+              :name="item.slot"
+              :form-item="item"
+              :form-data="formModel"
+            ></slot>
             <!-- 渲染内置组件 -->
             <component
               v-else
@@ -33,6 +38,7 @@
 <script setup lang="ts">
 import { reactive, ref, watch } from 'vue'
 import type { IForm, IFormItem } from './type'
+import type { FormValidateCallback } from 'element-plus'
 import { ElForm, ElInput, ElSelect, ElDatePicker } from 'element-plus'
 
 const props = defineProps<{
@@ -78,8 +84,10 @@ const getComponent = (item: IFormItem) => {
 
 /** 对外暴露方法 */
 defineExpose({
+  elFormRef,
   formModel,
-  validate: () => elFormRef.value?.validate(),
+  formRules,
+  validate: (callback?: FormValidateCallback) => elFormRef.value?.validate(callback),
   resetFields: () => elFormRef.value?.resetFields(),
 })
 </script>
