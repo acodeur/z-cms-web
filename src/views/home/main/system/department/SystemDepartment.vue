@@ -72,7 +72,7 @@ const handleSearch = (
     pageSize: _pageSize ?? initPageSize,
   }
   systemStore.getSystemData(contentConfig.pageName, systemSearchReq).then(() => {
-    pageContentRef.value.updatePagination({
+    pageContentRef.value?.updatePagination({
       pageSize: _pageSize ?? initPageSize,
       currentPage: _pageNum ?? initPageNum,
     })

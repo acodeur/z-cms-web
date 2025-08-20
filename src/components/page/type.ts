@@ -2,6 +2,7 @@ import type { IForm, IFormItem } from '@/components/form/type'
 
 // PageContent
 interface IPageContentConfig {
+  pageName: string
   header: {
     title: string
     btnTxt: string

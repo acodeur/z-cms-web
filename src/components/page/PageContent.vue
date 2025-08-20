@@ -12,48 +12,46 @@
       <el-table :data="dataList" stripe>
         <template v-for="item in config.propsList" :key="item.prop">
           <!-- 时间列 -->
-          <template v-if="item.type === 'datetime'">
-            <el-table-column v-bind="item">
-              <template #default="scope">
-                {{ formatDate(scope.row[item.prop]) }}
-              </template>
-            </el-table-column>
-          </template>
+          <el-table-column v-if="item.type === 'datetime'" v-bind="item">
+            <template #default="scope">
+              {{ formatDate(scope.row[item.prop]) }}
+            </template>
+          </el-table-column>
           <!-- 标签列 -->
-          <template v-else-if="item.type === 'boolTag'">
-            <el-table-column v-bind="item">
-              <template #default="scope">
-                <el-tag :type="scope.row[item.prop] ? 'success' : 'danger'">
-                  {{ scope.row[item.prop] ? item.trueTag : item.falseTag }}
-                </el-tag>
-              </template>
-            </el-table-column>
-          </template>
+          <el-table-column v-else-if="item.type === 'boolTag'" v-bind="item">
+            <template #default="scope">
+              <el-tag :type="scope.row[item.prop] ? 'success' : 'danger'">
+                {{ scope.row[item.prop] ? item.trueTag : item.falseTag }}
+              </el-tag>
+            </template>
+          </el-table-column>
           <!-- 操作列 -->
-          <template v-else-if="item.type === 'operation'">
-            <el-table-column v-bind="item">
-              <template #default="scope">
-                <el-button
-                  size="small"
-                  text
-                  type="primary"
-                  @click="handleEdit(scope.$index, scope.row)"
-                  ><el-icon><Edit /></el-icon> 编辑</el-button
-                >
-                <el-button
-                  size="small"
-                  text
-                  type="danger"
-                  @click="handleDelete(scope.$index, scope.row)"
-                  ><el-icon><Delete /></el-icon> 删除</el-button
-                >
-              </template>
-            </el-table-column>
-          </template>
+          <el-table-column v-else-if="item.type === 'operation'" v-bind="item">
+            <template #default="scope">
+              <el-button
+                size="small"
+                text
+                type="primary"
+                @click="handleEdit(scope.$index, scope.row)"
+                ><el-icon><Edit /></el-icon> 编辑</el-button
+              >
+              <el-button
+                size="small"
+                text
+                type="danger"
+                @click="handleDelete(scope.$index, scope.row)"
+                ><el-icon><Delete /></el-icon> 删除</el-button
+              >
+            </template>
+          </el-table-column>
+          <!-- 自定义列 -->
+          <el-table-column v-else-if="item.type === 'custom'" v-bind="item">
+            <template #default="scope">
+              <slot :name="item.slot" :row="scope.row"></slot>
+            </template>
+          </el-table-column>
           <!-- 普通列 -->
-          <template v-else>
-            <el-table-column v-bind="item"></el-table-column>
-          </template>
+          <el-table-column v-else v-bind="item"></el-table-column>
         </template>
       </el-table>
     </div>
@@ -90,7 +88,7 @@ const emit = defineEmits([
 const { pagination } = props.config
 const pageSize = ref(pagination.pageSize)
 const currentPage = ref(pagination.currentPage)
-const {dataList, totalCount} = toRefs(props.model)
+const { dataList, totalCount } = toRefs(props.model)
 
 function handleAdd() {
   emit('handleAdd')
