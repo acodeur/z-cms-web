@@ -5,7 +5,7 @@
 </template>
 
 <script setup lang="ts">
-import { computed, reactive } from 'vue'
+import { computed } from 'vue'
 import BaseEchart from './BaseEchart.vue'
 import * as echarts from 'echarts'
 

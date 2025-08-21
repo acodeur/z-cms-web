@@ -3,7 +3,7 @@
     <!-- 顶部数据展示 -->
     <el-row :gutter="60">
       <el-col v-for="item in amounts" :key="item" :span="24 / amounts.length">
-        <count-card></count-card>
+        <count-card v-bind="item"></count-card>
       </el-col>
     </el-row>
 
@@ -39,10 +39,15 @@
 </template>
 
 <script setup lang="ts">
+import useAnalysisStore from '@/stores/home/analysis/analysis'
 import CountCard from './cpns/CountCard.vue'
 import BarEchart from '@/components/echarts/src/BarEchart.vue'
+import { storeToRefs } from 'pinia'
 
-const amounts = [1, 2, 3, 4]
+const analysisStore = useAnalysisStore()
+const { amounts } = storeToRefs(analysisStore)
+analysisStore.fetchAnalysisAmountsData()
+
 </script>
 
 <style lang="less" scoped>
