@@ -58,7 +58,4 @@ const options = reactive<EChartsOption>({
 })
 </script>
 
-<style lang="less" scoped>
-.line-echart {
-}
-</style>
+<style lang="less" scoped></style>

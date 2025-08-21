@@ -70,7 +70,4 @@ const options = computed<echarts.EChartsOption>(() => {
 })
 </script>
 
-<style lang="less" scoped>
-.bar-echart {
-}
-</style>
+<style lang="less" scoped></style>
