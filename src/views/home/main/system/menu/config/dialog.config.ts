@@ -48,8 +48,7 @@ const dialogConfig: IPageDialogConfig = {
           component: 'input',
           componentProps: { placeholder: '请输入菜单路径' },
           rules: [
-            { required: true, message: '请输入菜单路径', trigger: 'blur' },
-            { min: 1, max: 50, message: '长度最大50位', trigger: 'change' },
+            { min: 0, max: 50, message: '长度最大50位', trigger: 'change' },
           ],
         },
         {
@@ -58,7 +57,6 @@ const dialogConfig: IPageDialogConfig = {
           colProps: { span: 21 },
           component: 'input',
           componentProps: { placeholder: '请输入菜单图标' },
-          rules: [{ required: true, message: '请输入菜单图标', trigger: 'blur' }],
         },
         {
           field: 'sort',
@@ -66,7 +64,6 @@ const dialogConfig: IPageDialogConfig = {
           colProps: { span: 21 },
           component: 'input',
           componentProps: { placeholder: '请设置菜单顺序' },
-          rules: [{ required: true, message: '请设置菜单顺序', trigger: 'blur' }],
         },
         {
           belong: 'edit',

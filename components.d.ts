@@ -8,8 +8,8 @@ export {}
 /* prettier-ignore */
 declare module 'vue' {
   export interface GlobalComponents {
-    BarEchart: typeof import('./src/components/echarts/BarEchart.vue')['default']
-    BaseEchart: typeof import('./src/components/echarts/BaseEchart.vue')['default']
+    BarEchart: typeof import('./src/components/echarts/src/BarEchart.vue')['default']
+    BaseEchart: typeof import('./src/components/echarts/src/BaseEchart.vue')['default']
     DynamicForm: typeof import('./src/components/form/DynamicForm.vue')['default']
     ElAside: typeof import('element-plus/es')['ElAside']
     ElAvatar: typeof import('element-plus/es')['ElAvatar']
@@ -62,7 +62,7 @@ declare module 'vue' {
     PageContent: typeof import('./src/components/page/PageContent.vue')['default']
     PageDialog: typeof import('./src/components/page/PageDialog.vue')['default']
     PageSearch: typeof import('./src/components/page/PageSearch.vue')['default']
-    PieEchart: typeof import('./src/components/echarts/PieEchart.vue')['default']
+    PieEchart: typeof import('./src/components/echarts/src/PieEchart.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
   }
