@@ -1,6 +1,46 @@
 <template>
   <div class="analysis-overview">
-    <h2>analysis-overview</h2>
+    <el-row>
+      
+    </el-row>
+    <el-row :gutter="20">
+      <el-col :span="8">
+        <el-card>
+          <template #header>
+            <div class="card-header">
+              <span>总销售额</span>
+            </div>
+          </template>
+          <div class="card-content">
+            <span>¥ 126,560</span>
+          </div>
+        </el-card>
+      </el-col>
+      <el-col :span="8">
+        <el-card>
+          <template #header>
+            <div class="card-header">
+              <span>访问量</span>
+            </div>
+          </template>
+          <div class="card-content">
+            <span>88460</span>
+          </div>
+        </el-card>
+      </el-col>
+      <el-col :span="8">
+        <el-card>
+          <template #header>
+            <div class="card-header">
+              <span>支付笔数</span>
+            </div>
+          </template>
+          <div class="card-content">
+            <span>88460</span>
+          </div>
+        </el-card>
+      </el-col>
+    </el-row>
   </div>
 </template>
 

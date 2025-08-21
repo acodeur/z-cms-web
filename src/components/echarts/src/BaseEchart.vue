@@ -5,11 +5,11 @@
 </template>
 
 <script setup lang="ts">
-import { onBeforeUnmount, onMounted, ref, watchEffect } from 'vue'
+import { onMounted, onUnmounted, ref, watchEffect } from 'vue'
 import * as echarts from 'echarts'
 
 interface IProps {
-  options: echarts.EChartsOption
+  options: echarts.EChartsOption | any
 }
 
 const props = defineProps<IProps>()
@@ -18,7 +18,7 @@ let echartInstance: echarts.ECharts
 
 onMounted(() => {
   // 初始化echarts实例
-  echartInstance = echarts.init(echartRef.value!, 'dark', { renderer: 'canvas' })
+  echartInstance = echarts.init(echartRef.value!, 'light', { renderer: 'canvas' })
 
   // 设置options
   watchEffect(() => {
@@ -32,20 +32,19 @@ onMounted(() => {
 })
 
 // 销毁
-onBeforeUnmount(() => {
+onUnmounted(() => {
   window.removeEventListener('resize', () => {
     echartInstance.resize()
   })
   echartInstance.dispose()
 })
-
-
 </script>
 
 <style lang="less" scoped>
 .base-echart {
-  padding: 5px;
-  background-color: #f0f0f0;
-  border-radius: 8px;
+  .echart {
+    width: 100%;
+    height: 300px;
+  }
 }
 </style>
