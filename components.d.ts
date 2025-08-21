@@ -66,6 +66,7 @@ declare module 'vue' {
     PageDialog: typeof import('./src/components/page/PageDialog.vue')['default']
     PageSearch: typeof import('./src/components/page/PageSearch.vue')['default']
     PieEchart: typeof import('./src/components/echarts/src/PieEchart.vue')['default']
+    RoseEchart: typeof import('./src/components/echarts/src/RoseEchart.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
   }

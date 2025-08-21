@@ -8,12 +8,9 @@
 import { computed } from 'vue'
 import BaseEchart from './BaseEchart.vue'
 import * as echarts from 'echarts'
+import type { EchartProps } from '../type';
 
-interface IProps {
-  labels: string[]
-  values: number[]
-}
-const props = defineProps<IProps>()
+const props = defineProps<EchartProps>()
 const options = computed<echarts.EChartsOption>(() => {
   return {
     title: {

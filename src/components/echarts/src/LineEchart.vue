@@ -8,12 +8,9 @@
 import { reactive } from 'vue'
 import BaseEchart from './BaseEchart.vue'
 import type { EChartsOption } from 'echarts'
+import type { EchartProps } from '../type'
 
-const props = defineProps<{
-  labels: string[]
-  values: number[]
-}>()
-
+const props = defineProps<EchartProps>()
 const options = reactive<EChartsOption>({
   tooltip: {
     trigger: 'axis',

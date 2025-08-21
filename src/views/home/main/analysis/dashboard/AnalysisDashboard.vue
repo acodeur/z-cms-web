@@ -6,10 +6,20 @@
         <count-card v-bind="item"></count-card>
       </el-col>
     </el-row>
-
+    <!-- 中间部分图表 -->
     <el-row :gutter="20">
-      <el-col :span="6">
-        <el-card>
+      <el-col :span="7">
+        <el-card shadow="hover">
+          <template #header>
+            <div class="card-header">
+              <span>分类商品数量(饼图)</span>
+            </div>
+          </template>
+          <pie-echart :labels="countsData.labels" :values="countsData.values"></pie-echart>
+        </el-card>
+      </el-col>
+      <el-col :span="10">
+        <el-card shadow="hover">
           <template #header>
             <div class="card-header">
               <span>访问量</span>
@@ -21,17 +31,14 @@
           ></bar-echart>
         </el-card>
       </el-col>
-      <el-col :span="6">
-        <el-card>
+      <el-col :span="7">
+        <el-card shadow="hover">
           <template #header>
             <div class="card-header">
-              <span>销售额</span>
+              <span>分类商品数量(玫瑰图)</span>
             </div>
           </template>
-          <line-echart
-            :labels="['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']"
-            :values="[10, 52, 200, 334, 390, 330, 220]"
-          ></line-echart>
+          <rose-echart :labels="countsData.labels" :values="countsData.values"></rose-echart>
         </el-card>
       </el-col>
     </el-row>
@@ -41,13 +48,27 @@
 <script setup lang="ts">
 import useAnalysisStore from '@/stores/home/analysis/analysis'
 import CountCard from './cpns/CountCard.vue'
-import BarEchart from '@/components/echarts/src/BarEchart.vue'
 import { storeToRefs } from 'pinia'
+import { computed } from 'vue'
 
 const analysisStore = useAnalysisStore()
-const { amounts } = storeToRefs(analysisStore)
+// 获取顶部数据
 analysisStore.fetchAnalysisAmountsData()
-
+// 获取中间部分图表数据
+analysisStore.fetchAnalysisCountsData()
+analysisStore.fetchAnalysisSalesData()
+// 获取不同城市销售数据
+analysisStore.fetchAnalysisSaleAddressData()
+const { amounts, counts, sales, saleAddress } = storeToRefs(analysisStore)
+const countsData = computed(() => {
+  const labels: string[] = []
+  const values: number[] = []
+  counts.value.forEach((item) => {
+    labels.push(item.name)
+    values.push(item.goodsCount)
+  })
+  return { labels, values }
+})
 </script>
 
 <style lang="less" scoped>

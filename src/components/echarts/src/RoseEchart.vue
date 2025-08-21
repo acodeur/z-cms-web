@@ -1,5 +1,5 @@
 <template>
-  <div class="pie-echart">
+  <div class="rose-echart">
     <base-echart :options="options"></base-echart>
   </div>
 </template>
@@ -13,31 +13,44 @@ import type { EchartProps } from '../type'
 const props = defineProps<EchartProps>()
 const options = computed<echarts.EChartsOption>(() => {
   return {
-    tooltip: {
-      trigger: 'item',
+    toolbox: {
+      show: true,
+      feature: {
+        mark: { show: true },
+        // dataView: { show: true, readOnly: false },
+        // restore: { show: true },
+        // saveAsImage: { show: true },
+      },
     },
     legend: {
       orient: 'horizontal',
       left: 'left',
       top: '0',
     },
+    tooltip: {
+      trigger: 'item',
+    },
     series: [
       {
         name: '访问来源',
         type: 'pie',
-        radius: '50%',
+        // 内半径/外半径的大小
+        radius: [10, 150],
+        // 设置区域的位置
+        center: ['50%', '50%'],
+        bottom: '-15%',
+        roseType: 'area', // 圆心角一样, 通过半径的不同表示大小
+        itemStyle: {
+          borderRadius: 8,
+        },
         data: props.labels.map((item, index) => {
           return {
             value: props.values[index],
             name: item,
           }
         }),
-        emphasis: {
-          itemStyle: {
-            shadowBlur: 10,
-            shadowOffsetX: 0,
-            shadowColor: 'rgba(0, 0, 0, 0.5)',
-          },
+        label: {
+          show: false,
         },
       },
     ],
