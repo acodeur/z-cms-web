@@ -1,8 +1,14 @@
 import { getCurrentUserApi, getAllRoleApi, getAllDepartmentApi } from '@/service/common'
 import { defineStore } from 'pinia'
 
-const commonStrore = defineStore('common', {
-  state: () => ({
+interface ICommonState {
+  currentUser: any
+  allRole: any[]
+  allDepartment: any[]
+}
+
+const useCommonStrore = defineStore('common', {
+  state: (): ICommonState => ({
     currentUser: {},
     allRole: [],
     allDepartment: [],
@@ -34,4 +40,4 @@ const commonStrore = defineStore('common', {
   },
 })
 
-export default commonStrore
+export default useCommonStrore

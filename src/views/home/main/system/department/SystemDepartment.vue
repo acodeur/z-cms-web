@@ -17,7 +17,11 @@
       @handle-delete="handleDelete"
       @handle-current-page-change="handleCurrentPageChange"
       @handle-page-size-change="handlePageSizeChange"
-    ></page-content>
+    >
+      <template #parentIdSlot="{ row }">
+        {{ allDepartment.find((item) => item.id === row.parentId)?.name || '' }}
+      </template>
+    </page-content>
     <page-dialog ref="pageDialogRef" :config="dialogConfigRef" @handle-confirm="handleConfirm">
       <template #datetime="{ formItem, formData }">
         <el-input v-model="formData[formItem.field]" v-bind="formItem.componentProps"></el-input>
@@ -32,6 +36,7 @@ import contentConfig from './config/content.config'
 import searchConfig from './config/search.config'
 import dialogConfig from './config/dialog.config'
 import useSystemStore from '@/stores/home/system/system'
+import useCommonStrore from '@/stores/common'
 import { storeToRefs } from 'pinia'
 import { ElMessage, ElMessageBox } from 'element-plus'
 import type { DialogType } from '@/components/page/type'
@@ -46,6 +51,8 @@ const pageContentRef = ref()
 const pageDialogRef = ref()
 
 let currentSystemSearchReq: Record<string, any> = {}
+const commonStore = useCommonStrore()
+const { allDepartment } = storeToRefs(commonStore)
 
 //初始化值
 const systemStore = useSystemStore()

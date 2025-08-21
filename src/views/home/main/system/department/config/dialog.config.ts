@@ -1,4 +1,27 @@
 import type { IPageDialogConfig } from '@/components/page/type'
+import useCommonStrore from '@/stores/common'
+
+function parentIdOptions() {
+  let options: { label: string; value: any }[] = []
+  const commonStore = useCommonStrore()
+  commonStore.loadAllDepartment().then(() => {
+    commonStore.allDepartment.map((item: any) => {
+      options.push({
+        label: item.name,
+        value: item.id,
+      })
+    })
+  })
+  return options
+}
+
+function parentIdValidator(rule: any, value: any, callback: any) {
+  if (typeof value === 'number') {
+    value = value + ''
+  }
+  value = value.trim()
+  return value.length >= 1 && value.length <= 50
+}
 
 const dialogConfig: IPageDialogConfig = {
   header: {
@@ -46,8 +69,9 @@ const dialogConfig: IPageDialogConfig = {
           field: 'parentId',
           label: '上级部门',
           colProps: { span: 21 },
-          component: 'input',
+          component: 'select',
           componentProps: { placeholder: '请输入上级部门名称' },
+          options: parentIdOptions(),
           rules: [
             { required: true, message: '请输入上级部门名称', trigger: 'blur' },
             { validator: parentIdValidator, message: '长度最大50位', trigger: 'change' },
@@ -86,14 +110,6 @@ const dialogConfig: IPageDialogConfig = {
     },
     model: {},
   },
-}
-
-function parentIdValidator(rule: any, value: any, callback: any) {
-  if (typeof value === 'number') {
-    value = value + ''
-  }
-  value = value.trim()
-  return value.length >= 1 && value.length <= 50
 }
 
 export default dialogConfig
