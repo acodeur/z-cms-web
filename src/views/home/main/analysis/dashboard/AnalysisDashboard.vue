@@ -22,13 +22,10 @@
         <el-card shadow="hover">
           <template #header>
             <div class="card-header">
-              <span>访问量</span>
+              <span>全国销量统计</span>
             </div>
           </template>
-          <bar-echart
-            :labels="['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']"
-            :values="[10, 52, 200, 334, 390, 330, 220]"
-          ></bar-echart>
+          <map-echart :mapData="saleAddressData"></map-echart>
         </el-card>
       </el-col>
       <el-col :span="7">
@@ -68,6 +65,11 @@ const countsData = computed(() => {
     values.push(item.goodsCount)
   })
   return { labels, values }
+})
+const saleAddressData = computed(() => {
+  return saleAddress.value.map((item) => {
+    return { name: item.address, value: item.count }
+  })
 })
 </script>
 

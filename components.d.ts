@@ -58,6 +58,7 @@ declare module 'vue' {
     Footer: typeof import('./src/components/nav/Footer.vue')['default']
     Header: typeof import('./src/components/nav/Header.vue')['default']
     LineEchart: typeof import('./src/components/echarts/src/LineEchart.vue')['default']
+    MapEchart: typeof import('./src/components/echarts/src/MapEchart.vue')['default']
     Menu: typeof import('./src/components/nav/Menu.vue')['default']
     NavFooter: typeof import('./src/components/nav/NavFooter.vue')['default']
     NavHeader: typeof import('./src/components/nav/NavHeader.vue')['default']
